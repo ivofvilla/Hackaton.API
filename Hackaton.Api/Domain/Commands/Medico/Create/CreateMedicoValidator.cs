@@ -27,8 +27,6 @@ namespace Hackaton.Api.Domain.Commands.Medico.Create
             RuleFor(command => command.Especialidade)
                 .NotEmpty().WithMessage("O campo Especialidade é obrigatório.");
 
-            RuleFor(command => command.DiasTrabalho)
-                .NotEmpty().WithMessage("O campo DiasTrabalho é obrigatória.");
         }
     }
 }

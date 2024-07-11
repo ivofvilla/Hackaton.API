@@ -17,11 +17,7 @@ namespace Hackaton.Api.Domain.Models
         public string Senha { get; set; }
         [Column("DataNascimento")]
         public DateTime DataNascimento { get; set; }
-        public IEnumerable<Agenda> Agendas { get; set; } = new List<Agenda>();
-
-        public Paciente()
-        {
-        }
+        public virtual IEnumerable<Agenda> Agendas { get; set; } = new List<Agenda>();
 
         public Paciente(string nome, string email, string senha, DateTime dataNascimento)
         {

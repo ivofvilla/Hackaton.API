@@ -56,13 +56,7 @@ namespace Hackaton.Api.Repository
             {
                 medicos = medicos.Where(w => w.DataNascimento == DataNascimento);
             }
-            if (DiasTrabalho is not null)
-            {
-                medicos = medicos
-                            .Include(m => m.DiaDeTrabalho)
-                            .Where(m => m.DiaDeTrabalho.Any(dt => DiasTrabalho.Contains((Dia)dt.Dia)));
-            }
-
+            
             return await medicos.ToListAsync(cancellationToken);
         }
 

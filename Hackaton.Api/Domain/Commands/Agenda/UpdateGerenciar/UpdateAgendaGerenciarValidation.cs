@@ -3,7 +3,7 @@ using Hackaton.Api.Domain.Commands.Agenda.Update;
 
 namespace Hackaton.Api.Domain.Commands.Agenda.UpdateGerenciar
 {
-    public class UpdateAgendaGerenciarValidation : AbstractValidator<UpdateAgendaCommand>
+    public class UpdateAgendaGerenciarValidation : AbstractValidator<UpdateAgendaGerenciarCommand>
     {
         public UpdateAgendaGerenciarValidation()
         {

@@ -14,7 +14,6 @@ namespace Hackaton.Api.Domain.Commands.Medico.Update
         public string Senha { get; set; }
         public string CRM { get; set; }
         public string Especialidade { get; set; }
-        public IEnumerable<DiasTrabalho> DiasTrabalho { get; set; }
         public DateTime DataNascimento { get; set; }
     }
 }

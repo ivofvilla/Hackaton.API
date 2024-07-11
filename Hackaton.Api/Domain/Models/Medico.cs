@@ -25,13 +25,11 @@ namespace Hackaton.Api.Domain.Models
         public bool Ativo { get; set; }
         public IEnumerable<Agenda> Agendas { get; set; } = new List<Agenda>();
 
-        public List<DiasTrabalho> DiaDeTrabalho { get; set; } = new List<DiasTrabalho>();
-
         public Medico()
-        {
+        { 
         }
 
-        public Medico(string nome, string email, string senha, DateTime dataNascimento, string CRM, string especialidade, IEnumerable<DiasTrabalho> diasTrabalhos)
+        public Medico(string nome, string email, string senha, DateTime dataNascimento, string CRM, string especialidade)
         {
             this.Nome = nome;
             this.Email = email;
@@ -39,7 +37,6 @@ namespace Hackaton.Api.Domain.Models
             this.DataNascimento = dataNascimento;
             this.CRM = CRM;
             this.Especialidade = especialidade;
-            this.DiaDeTrabalho.AddRange(diasTrabalhos);
             this.Ativo = true;
         }
 

@@ -25,7 +25,7 @@ namespace Hackaton.Api.Domain.Commands.Medico.Create
                 return false;
             }
 
-            var paciente = new Models.Medico(command.Nome, command.Email, command.Senha, command.DataNascimento, command.CRM, command.Especialidade, command.DiasTrabalho);
+            var paciente = new Models.Medico(command.Nome, command.Email, command.Senha, command.DataNascimento, command.CRM, command.Especialidade);
 
             await _medicoRepository.CreateAsync(paciente, cancellationToken);
 

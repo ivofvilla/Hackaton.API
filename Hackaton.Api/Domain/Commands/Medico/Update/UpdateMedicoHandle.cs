@@ -37,7 +37,6 @@ namespace Hackaton.Api.Domain.Commands.Medico.Update
             medico.DataNascimento = command.DataNascimento;
             medico.CRM = command.CRM;
             medico.Especialidade = command.Especialidade;
-            medico.DiaDeTrabalho.AddRange(command.DiasTrabalho);
 
             await _medicoRepository.UpdateAsync(medico, cancellationToken);
 

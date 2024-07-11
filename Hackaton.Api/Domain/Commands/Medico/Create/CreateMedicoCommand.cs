@@ -10,7 +10,6 @@ namespace Hackaton.Api.Domain.Commands.Medico.Create
         public string Senha { get; set; }
         public string CRM { get; set; }
         public string Especialidade { get; set; }
-        public IEnumerable<DiasTrabalho> DiasTrabalho { get; set; }
         public DateTime DataNascimento { get; set; }
         public bool Ativo { get; set; } = true;
     }

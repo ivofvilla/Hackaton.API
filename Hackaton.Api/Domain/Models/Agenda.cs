@@ -20,10 +20,6 @@ namespace Hackaton.Api.Domain.Models
         [Column("Ativo")]
         public bool Ativo { get; set; }
 
-        public Agenda()
-        {
-        }
-
         public Agenda(int IdPaciente, int IdMedico, DateTime DataAgendamento, bool ehMedico)
         {
             this.IdPaciente = IdPaciente;
