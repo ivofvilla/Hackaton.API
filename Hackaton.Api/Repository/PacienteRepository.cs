@@ -27,9 +27,12 @@ namespace Hackaton.Api.Repository
             await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<Paciente?> GetByIdAsync(int Id, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Paciente>> GetByIdAsync(int? Id, CancellationToken cancellationToken = default)
         {
-            return await _context.Paciente.FirstOrDefaultAsync(w => w.Id == Id);
+            if (Id is not null)
+                await _context.Paciente.FirstOrDefaultAsync(w => w.Id == Id);
+
+            return await _context.Paciente.ToListAsync();
         }
     }
 }

@@ -64,10 +64,9 @@ namespace Hackaton.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("api/medico/HttpDelete/{id}")]
-        public async Task<IActionResult> Remover(int Id, CancellationToken cancellation)
+        [Route("api/medico/remover")]
+        public async Task<IActionResult> Remover(DeleteMedicoCommand command, CancellationToken cancellation)
         {
-            var command = new DeleteMedicoCommand { Id = Id };
             await _mediator.Send(command, cancellation);
             return Ok("Médico apagado com sucesso!");
         }

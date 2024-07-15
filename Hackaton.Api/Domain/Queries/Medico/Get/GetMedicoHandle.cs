@@ -15,7 +15,7 @@ namespace Hackaton.Api.Domain.Queries.Medico.Get
 
         public async Task<GetMedicoResult> Handle(GetMedicoQuery query, CancellationToken cancellationToken)
         {
-            var result = await _medicoRepository.GetAsync(query.Id, query.CRM, query.Email, query.Ativo, query.DataNascimento, query.DiasTrabalho, cancellationToken);
+            var result = await _medicoRepository.GetAsync(query.Id, query.CRM, query.Email, query.Ativo, query.DataNascimento, cancellationToken);
             var clients = new GetMedicoResult();
             clients.Medicos = result;
 

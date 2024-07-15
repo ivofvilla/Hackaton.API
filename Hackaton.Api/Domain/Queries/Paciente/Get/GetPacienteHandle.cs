@@ -13,10 +13,10 @@ namespace Hackaton.Api.Domain.Queries.Paciente.Get
         }
 
         public async Task<GetPacienteResult?> Handle(GetPacienteQuery query, CancellationToken cancellationToken)
-        {
+        {   
             var result = await _pacienteRepository.GetByIdAsync(query.Id,cancellationToken);
             var paciente = new GetPacienteResult();
-            paciente.Pacientes = result;
+            paciente.Pacientes.AddRange(result);
 
             return paciente;
         }

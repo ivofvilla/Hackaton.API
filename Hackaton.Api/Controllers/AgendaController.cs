@@ -1,7 +1,7 @@
 ﻿using Hackaton.Api.Domain.Commands.Agenda.Create;
 using Hackaton.Api.Domain.Commands.Agenda.Delete;
 using Hackaton.Api.Domain.Commands.Agenda.Update;
-using Hackaton.Api.Domain.Commands.Agenda.UpdateGerenciar;
+using Hackaton.Api.Domain.Commands.Medico.Delete;
 using Hackaton.Api.Domain.Queries.Agenda.Get;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -48,25 +48,9 @@ namespace Hackaton.Api.Controllers
 
         }
 
-
-        [HttpPut]
-        [Route("api/agenda/gerenciar")]
-        public async Task<IActionResult> Alterar(UpdateAgendaGerenciarCommand agenda, CancellationToken cancellation)
-        {
-            var result = await _mediator.Send(agenda, cancellation);
-
-            if (result != null)
-            {
-                return NoContent();
-            }
-
-            return BadRequest("Erro ao atualizar o Agendamento!");
-
-        }
-
         [HttpGet]
         [Route("api/agenda/agenda")]
-        public async Task<IActionResult> Medicos(GetAgendaQuery agenda, CancellationToken cancellation)
+        public async Task<IActionResult> Agendas(GetAgendaQuery agenda, CancellationToken cancellation)
         {
             var result = await _mediator.Send(agenda, cancellation);
 
@@ -80,12 +64,12 @@ namespace Hackaton.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("api/medico/cancelar/{id}")]
-        public async Task<IActionResult> Remover(int Id, CancellationToken cancellation)
+        [Route("api/medico/remover/{id}")]
+        public async Task<IActionResult> remover(int id, CancellationToken cancellation)
         {
-            var command = new DeleteAgendamentoCommand { Id = Id };
+            var command = new DeleteAgendamentoCommand { Id = id };
             await _mediator.Send(command, cancellation);
-            return Ok("Médico apagado com sucesso!");
+            return Ok("Agendamento apagado com sucesso!");
         }
     }
 }

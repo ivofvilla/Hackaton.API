@@ -24,7 +24,7 @@ namespace Hackaton.Api.Domain.Commands.Agenda.Create
                 return false;
             }
 
-            var agendamento = new Models.Agenda(command.IdPaciente, command.IdMedico, command.DataAgendamento, true);
+            var agendamento = new Models.Agenda(command.IdPaciente, command.IdMedico, command.DataAgendamento);
 
             await _agendamentoRepository.CreateAsync(agendamento, cancellationToken);
 

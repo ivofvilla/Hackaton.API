@@ -14,7 +14,7 @@ namespace Hackaton.Api.Domain.Queries.Agenda.Get
 
         public async Task<GetAgendaResult> Handle(GetAgendaQuery query, CancellationToken cancellationToken)
         {
-            var result = await _agendaRepository.GetAsync(null, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, cancellationToken);
+            var result = await _agendaRepository.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, cancellationToken);
             var agenda = new GetAgendaResult();
             agenda.Agendamentos = result;
 

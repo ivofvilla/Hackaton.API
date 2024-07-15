@@ -6,9 +6,7 @@ namespace Hackaton.Api.Domain.Commands.Medico.Update
 {
     public class UpdateMedicoCommand : IRequest<bool>
     {
-        public UpdateMedicoCommand(int id) => Id = id;
-
-        public int Id { get; }
+        public int Id { get; set;  }
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }

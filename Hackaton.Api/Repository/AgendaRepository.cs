@@ -50,23 +50,15 @@ namespace Hackaton.Api.Repository
             return await agendas.ToListAsync(cancellationToken);
         }
 
-        public async Task<Agenda?> GetAgendamentoAsync(int? IdMedico, int? IdPaciente, DateTime? DataAgendamento, bool? EhMedico, CancellationToken cancellationToken = default)
+        public async Task<Agenda?> GetAgendamentoAsync(int? Id, DateTime? DataAgendamento, bool? EhMedico, CancellationToken cancellationToken = default)
         {
             IQueryable<Agenda>? agendas = _context.Agenda;
 
-            if (IdMedico is not null)
+            if (Id is not null)
             {
-                agendas = agendas.Where(w => w.IdMedico == IdMedico);
+                agendas = agendas.Where(w => w.Id == Id);
             }
 
-            if (IdPaciente is not null)
-            {
-                agendas = agendas.Where(w => w.IdPaciente == IdPaciente);
-            }
-            if (EhMedico is not null)
-            {
-                agendas = agendas.Where(w => w.Ativo == EhMedico);
-            }
             if (DataAgendamento is not null)
             {
                 agendas = agendas.Where(w => w.DataAgendamento == DataAgendamento);

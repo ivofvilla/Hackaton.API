@@ -22,7 +22,7 @@ namespace Hackaton.Api.Controllers
         {
             var result = await _mediator.Send(paciente, cancellation);
 
-            if (result != null)
+            if (result)
             {
                 return Created();
             }
@@ -37,12 +37,12 @@ namespace Hackaton.Api.Controllers
         {
             var result = await _mediator.Send(paciente, cancellation);
 
-            if (result != null)
+            if (result)
             {
                 return NoContent();
             }
 
-            return BadRequest("Erro ao cadastrar o paciente!");
+            return BadRequest("Erro ao atualizar o paciente!");
 
         }
 

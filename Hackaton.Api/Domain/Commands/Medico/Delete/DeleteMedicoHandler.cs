@@ -24,7 +24,7 @@ namespace Hackaton.Api.Domain.Commands.Medico.Delete
             }
 
             var medico = await _medicoRepository.GetByIdAsync(command.Id, cancellationToken);
-            if (medico == null)
+            if (medico is null)
             {
                 return false;
             }

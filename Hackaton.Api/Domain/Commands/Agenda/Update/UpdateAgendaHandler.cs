@@ -28,19 +28,7 @@ namespace Hackaton.Api.Domain.Commands.Agenda.Update
                 return false;
             }
 
-            var medico = await _medicoRepository.GetByIdAsync(command.IdMedico, cancellationToken);
-            if (medico == null)
-            {
-                return false;
-            }
-
-            var paciente = await _medicoRepository.GetByIdAsync(command.IdPaciente, cancellationToken);
-            if (paciente == null)
-            {
-                return false;
-            }
-
-            var agendamento = await _agendamentoRepository.GetAgendamentoAsync(command.IdPaciente, command.IdMedico, command.DataAgendamento, false, cancellationToken);
+            var agendamento = await _agendamentoRepository.GetAgendamentoAsync(command.Id, null, null, cancellationToken);
 
             agendamento.DataAgendamento = command.NovaDataAgendamento;
             

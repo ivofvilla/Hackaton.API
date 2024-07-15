@@ -7,15 +7,9 @@ namespace Hackaton.Api.Domain.Commands.Agenda.Update
     {
         public UpdateAgendaValidation()
         {
-            RuleFor(command => command.IdMedico)
-                .NotEmpty().WithMessage("O campo Médico é obrigatório.");
-
-            RuleFor(command => command.IdPaciente)
-                .NotEmpty().WithMessage("O campo Paciente é obrigatória.");
-
-            RuleFor(command => command.DataAgendamento)
-                .NotEmpty().WithMessage("O campo Data do agendamento é obrigatória.");
-            RuleFor(command => command.DataAgendamento)
+            RuleFor(command => command.Id)
+                .NotEmpty().WithMessage("O agendamento é obrigatório.");
+            RuleFor(command => command.NovaDataAgendamento)
                 .NotEmpty().WithMessage("O campo Nova Data do agendamento é obrigatória.");
         }
     }

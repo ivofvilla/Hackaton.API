@@ -35,7 +35,7 @@ namespace Hackaton.Api.Repository
             await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<Medico>> GetAsync(int? Id, string? CRM, string? Email, bool? Ativo, DateTime? DataNascimento, List<Dia>? DiasTrabalho, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Medico>> GetAsync(int? Id, string? CRM, string? Email, bool? Ativo, DateTime? DataNascimento, CancellationToken cancellationToken = default)
         {
             IQueryable<Medico>? medicos = _context.Medico;
 

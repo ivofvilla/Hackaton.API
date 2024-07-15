@@ -6,7 +6,6 @@ using Hackaton.Api.Repository.Interface;
 using FluentValidation;
 using Hackaton.Api.Domain.Commands.Paciente.Create;
 using Hackaton.Api.Domain.Commands.Paciente.Update;
-using Hackaton.Api.Domain.Commands.Agenda.UpdateGerenciar;
 using Hackaton.Api.Domain.Commands.Agenda.Update;
 using Hackaton.Api.Domain.Commands.Agenda.Delete;
 using Hackaton.Api.Domain.Commands.Agenda.Create;
@@ -29,7 +28,6 @@ builder.Services.AddDbContext<DbContextClass>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HakatonApi"))
 );
 
-builder.Services.AddTransient<IValidator<UpdateAgendaGerenciarCommand>, UpdateAgendaGerenciarValidation>();
 builder.Services.AddTransient<IValidator<UpdateAgendaCommand>, UpdateAgendaValidation>();
 builder.Services.AddTransient<IValidator<DeleteAgendamentoCommand>, DeleteAgendamentoValidator>();
 builder.Services.AddTransient<IValidator<CreateAgendaCommand>, CreateAgendaValidator>();
