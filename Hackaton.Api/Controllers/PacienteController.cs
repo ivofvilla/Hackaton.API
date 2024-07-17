@@ -48,7 +48,7 @@ namespace Hackaton.Api.Controllers
 
         [HttpGet]
         [Route("api/paciente/pacientes")]
-        public async Task<IActionResult> Pacientes(GetPacienteQuery paciente, CancellationToken cancellation)
+        public async Task<IActionResult> Pacientes([FromBody] GetPacienteQuery paciente, CancellationToken cancellation)
         {
             var result = await _mediator.Send(paciente, cancellation);
 

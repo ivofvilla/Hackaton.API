@@ -30,7 +30,7 @@ namespace Hackaton.Api.Repository
         public async Task<IEnumerable<Paciente>> GetByIdAsync(int? Id, CancellationToken cancellationToken = default)
         {
             if (Id is not null)
-                await _context.Paciente.FirstOrDefaultAsync(w => w.Id == Id);
+                return await _context.Paciente.Where(w => w.Id == Id).ToListAsync();
 
             return await _context.Paciente.ToListAsync();
         }

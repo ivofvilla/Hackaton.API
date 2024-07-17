@@ -32,7 +32,5 @@ namespace Hackaton.Api.Domain.Models
             this.DataAgendamento = DataAgendamento;
             this.Ativo = true;
         }
-
-
     }
 }
