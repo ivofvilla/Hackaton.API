@@ -18,7 +18,7 @@ namespace Hackaton.Api.Controllers
 
         [HttpPost]
         [Route("api/paciente/criar")]
-        public async Task<IActionResult> Criar(CreatePacienteCommand paciente, CancellationToken cancellation)
+        public async Task<IActionResult> Criar([FromBody] CreatePacienteCommand paciente, CancellationToken cancellation)
         {
             var result = await _mediator.Send(paciente, cancellation);
 
@@ -33,7 +33,7 @@ namespace Hackaton.Api.Controllers
 
         [HttpPut]
         [Route("api/paciente/atualizar")]
-        public async Task<IActionResult> Alterar(UpdatePacienteCommand paciente, CancellationToken cancellation)
+        public async Task<IActionResult> Alterar([FromBody] UpdatePacienteCommand paciente, CancellationToken cancellation)
         {
             var result = await _mediator.Send(paciente, cancellation);
 

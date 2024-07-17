@@ -13,8 +13,6 @@ namespace Hackaton.Api.Domain.Models
         public string Nome { get; set; }
         [Column("Email")]
         public string Email { get; set; }
-        [Column("Senha")]
-        public string Senha { get; set; }
         [Column("DataNascimento")]
         public DateTime DataNascimento { get; set; }
         [Column("CRM")]
@@ -33,7 +31,6 @@ namespace Hackaton.Api.Domain.Models
         {
             this.Nome = nome;
             this.Email = email;
-            this.Senha = senha;
             this.DataNascimento = dataNascimento;
             this.CRM = CRM;
             this.Especialidade = especialidade;

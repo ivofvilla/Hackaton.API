@@ -1,4 +1,5 @@
 ﻿using Hackaton.Api.Data;
+using Hackaton.Api.Domain.Models;
 using Hackaton.Api.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,17 +14,15 @@ namespace Hackaton.Api.Repository
             _context = context;
         }
 
-        public async Task<bool> CreateAsync(string email, string senha, CancellationToken cancellationToken)
+        public async Task CreateAsync(Login login, CancellationToken cancellationToken)
         {
-            bool logou = false;
+            await _context.Login.AddAsync(login, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
 
-            var resultadoPaciente =  await _context.Paciente.FirstOrDefaultAsync(w => w.Email.Equals(email) && w.Senha.Equals(senha));
-
-            if(resultadoPaciente is null) {
-                var resultadoMedico = await _context.Medico.FirstOrDefaultAsync(w => w.Email.Equals(email) && w.Senha.Equals(senha));
-            }
-
-            return logou;
+        public Task<bool> LoginAsync(string email, string senha, CancellationToken cancellationToken)
+        {
+            return _context.Login.AnyAsync(w => w.Email.Equals(email) && w.Senha.Equals(senha));
         }
     }
 }

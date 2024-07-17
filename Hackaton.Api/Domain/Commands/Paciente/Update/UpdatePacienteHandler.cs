@@ -23,17 +23,14 @@ namespace Hackaton.Api.Domain.Commands.Paciente.Update
                 return false;
             }
 
-            var pacientes = await _pacienteRepository.GetByIdAsync(command.Id, cancellationToken);
-            if (pacientes is null)
+            var paciente = await _pacienteRepository.GetByIdAsync(command.Id, cancellationToken);
+            if (paciente is null)
             {
                 return false;
             }
 
-            var paciente = pacientes.FirstOrDefault();
-
             paciente.Nome = command.Nome;
             paciente.Email = command.Email;
-            paciente.Senha = command.Senha;
             paciente.DataNascimento = command.DataNascimento;
 
             await _pacienteRepository.UpdateAsync(paciente, cancellationToken);

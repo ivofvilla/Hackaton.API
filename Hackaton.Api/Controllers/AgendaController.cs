@@ -20,11 +20,11 @@ namespace Hackaton.Api.Controllers
 
         [HttpPost]
         [Route("api/agenda/agendar")]
-        public async Task<IActionResult> Criar(CreateAgendaCommand agenda, CancellationToken cancellation)
+        public async Task<IActionResult> Criar([FromBody] CreateAgendaCommand agenda, CancellationToken cancellation)
         {
             var result = await _mediator.Send(agenda, cancellation);
 
-            if (result != null)
+            if (result)
             {
                 return Created();
             }
@@ -35,7 +35,7 @@ namespace Hackaton.Api.Controllers
 
         [HttpPut]
         [Route("api/agenda/reagendar")]
-        public async Task<IActionResult> Alterar(UpdateAgendaCommand agenda, CancellationToken cancellation)
+        public async Task<IActionResult> Alterar([FromBody] UpdateAgendaCommand agenda, CancellationToken cancellation)
         {
             var result = await _mediator.Send(agenda, cancellation);
 
@@ -65,7 +65,7 @@ namespace Hackaton.Api.Controllers
 
         [HttpDelete]
         [Route("api/medico/remover/{id}")]
-        public async Task<IActionResult> remover(int id, CancellationToken cancellation)
+        public async Task<IActionResult> Remover(int id, CancellationToken cancellation)
         {
             var command = new DeleteAgendamentoCommand { Id = id };
             await _mediator.Send(command, cancellation);

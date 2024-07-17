@@ -20,7 +20,7 @@ namespace Hackaton.Api.Controllers
 
         [HttpPost]
         [Route("api/medico/criar")]
-        public async Task<IActionResult> Criar(CreateMedicoCommand medico, CancellationToken cancellation)
+        public async Task<IActionResult> Criar([FromBody]CreateMedicoCommand medico, CancellationToken cancellation)
         {
             var result = await _mediator.Send(medico, cancellation);
 
@@ -35,7 +35,7 @@ namespace Hackaton.Api.Controllers
 
         [HttpPut]
         [Route("api/medico/atualizar")]
-        public async Task<IActionResult> Alterar(UpdateMedicoCommand medico, CancellationToken cancellation)
+        public async Task<IActionResult> Alterar([FromBody] UpdateMedicoCommand medico, CancellationToken cancellation)
         {
             var result = await _mediator.Send(medico, cancellation);
 
@@ -65,7 +65,7 @@ namespace Hackaton.Api.Controllers
 
         [HttpDelete]
         [Route("api/medico/remover")]
-        public async Task<IActionResult> Remover(DeleteMedicoCommand command, CancellationToken cancellation)
+        public async Task<IActionResult> Remover([FromBody] DeleteMedicoCommand command, CancellationToken cancellation)
         {
             await _mediator.Send(command, cancellation);
             return Ok("Médico apagado com sucesso!");

@@ -32,5 +32,6 @@ namespace Hackaton.Api.Data
         public virtual DbSet<Agenda> Agenda { get; set; }
         public virtual DbSet<Medico> Medico { get; set; }
         public virtual DbSet<Paciente> Paciente { get; set; }
+        public virtual DbSet<Login> Login { get; set; }
     }
 }

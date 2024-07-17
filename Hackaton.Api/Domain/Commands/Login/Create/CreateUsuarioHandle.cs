@@ -24,9 +24,7 @@ namespace Hackaton.Api.Domain.Commands.Login.Create
                 return false;
             }
 
-            await _loginRepository.CreateAsync(command.Email, command.Senha, cancellationToken);
-
-            return true;
+            return await _loginRepository.LoginAsync(command.Email, command.Senha, cancellationToken);
         }
     }
 }

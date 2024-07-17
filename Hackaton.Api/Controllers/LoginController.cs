@@ -16,11 +16,11 @@ namespace Hackaton.Api.Controllers
 
         [HttpPost]
         [Route("api/Login")]
-        public async Task<IActionResult> Login(CreateUsuarioCommand usuario, CancellationToken cancellation)
+        public async Task<IActionResult> Login([FromBody] CreateUsuarioCommand usuario, CancellationToken cancellation)
         {
             var result = await _mediator.Send(usuario, cancellation);
 
-            if (result != null)
+            if (result)
             {
                 return Ok("Login Efetuado!");
             }

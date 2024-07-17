@@ -50,23 +50,6 @@ namespace Hackaton.Api.Repository
             return await agendas.ToListAsync(cancellationToken);
         }
 
-        public async Task<Agenda?> GetAgendamentoAsync(int? Id, DateTime? DataAgendamento, bool? EhMedico, CancellationToken cancellationToken = default)
-        {
-            IQueryable<Agenda>? agendas = _context.Agenda;
-
-            if (Id is not null)
-            {
-                agendas = agendas.Where(w => w.Id == Id);
-            }
-
-            if (DataAgendamento is not null)
-            {
-                agendas = agendas.Where(w => w.DataAgendamento == DataAgendamento);
-            }
-
-            return await agendas.FirstOrDefaultAsync(cancellationToken);
-        }
-
         public async Task CreateAsync(Agenda agenda, CancellationToken cancellation = default)
         {
             _context.Agenda.Add(agenda);
@@ -87,6 +70,33 @@ namespace Hackaton.Api.Repository
         {
             _context.Agenda.Update(agenda);
             await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<Agenda?> GetAgendamentoAsync(int? Id, int? IdMedico, int? IdPaciente, DateTime? DataAgendamento, CancellationToken cancellationToken = default)
+        {
+            IQueryable<Agenda>? agendas = _context.Agenda;
+
+            if (Id is not null)
+            {
+                agendas = agendas.Where(w => w.Id == Id);
+            }
+
+            if (IdMedico is not null)
+            {
+                agendas = agendas.Where(w => w.IdMedico == IdMedico);
+            }
+
+            if (IdPaciente is not null)
+            {
+                agendas = agendas.Where(w => w.IdPaciente == IdPaciente);
+            }
+
+            if (DataAgendamento is not null)
+            {
+                agendas = agendas.Where(w => w.DataAgendamento == DataAgendamento);
+            }
+
+            return await agendas.FirstOrDefaultAsync(cancellationToken);
         }
 
     }

@@ -28,7 +28,7 @@ namespace Hackaton.Api.Domain.Commands.Agenda.Update
                 return false;
             }
 
-            var agendamento = await _agendamentoRepository.GetAgendamentoAsync(command.Id, null, null, cancellationToken);
+            var agendamento = await _agendamentoRepository.GetAgendamentoAsync(command.Id, null, null, null, cancellationToken);
 
             agendamento.DataAgendamento = command.NovaDataAgendamento;
             

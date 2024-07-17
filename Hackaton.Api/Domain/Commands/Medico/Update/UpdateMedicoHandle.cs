@@ -33,7 +33,6 @@ namespace Hackaton.Api.Domain.Commands.Medico.Update
 
             medico.Nome = command.Nome;
             medico.Email = command.Email;
-            medico.Senha = command.Senha;
             medico.DataNascimento = command.DataNascimento;
             medico.CRM = command.CRM;
             medico.Especialidade = command.Especialidade;

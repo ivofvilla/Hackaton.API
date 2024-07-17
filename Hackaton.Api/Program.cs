@@ -44,6 +44,13 @@ builder.Services.AddScoped<ILoginRepository, LoginRepository>().Reverse();
 builder.Services.AddScoped<IMedicoRepository, MedicoRepository>().Reverse();
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>().Reverse();
 
+builder.Services.AddCors(o => o.AddPolicy("HakatonApi", builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+}));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -58,5 +65,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("HakatonApi");
 
 app.Run();
