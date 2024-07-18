@@ -1,5 +1,4 @@
-﻿using Hackaton.Api.Domain.Models;
-using MediatR;
+﻿using MediatR;
 
 namespace Hackaton.Api.Domain.Commands.Medico.Create
 {

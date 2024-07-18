@@ -1,6 +1,4 @@
-﻿using Hackaton.Api.Domain.Models;
-using MediatR;
-using System.Security.Cryptography;
+﻿using MediatR;
 
 namespace Hackaton.Api.Domain.Commands.Medico.Update
 {

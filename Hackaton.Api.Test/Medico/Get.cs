@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Hackaton.Api.Domain.Queries.Medico.Get;
 using Hackaton.Api.Repository.Interface;
-using Hackaton.Api.Domain.Models;
+using Hackaton.Models;
 using System.Collections.Generic;
 
 
@@ -27,10 +27,10 @@ namespace Hackaton.Api.Test.Medico
         {
             // Arrange
             var query = new GetMedicoQuery { Id = 1 };
-            var medicos = new List<Domain.Models.Medico>
+            var medicos = new List<Models.Medico>
         {
-            new Domain.Models.Medico { Id = 1, Nome = "Dr. João" },
-            new Domain.Models.Medico { Id = 2, Nome = "Dra. Maria" }
+            new Models.Medico { Id = 1, Nome = "Dr. João" },
+            new Models.Medico { Id = 2, Nome = "Dra. Maria" }
         };
             _mockMedicoRepository.Setup(repo => repo.GetAsync(query.Id, query.CRM, query.Email, query.Ativo, query.DataNascimento, It.IsAny<CancellationToken>()))
                                  .ReturnsAsync(medicos);
@@ -51,7 +51,7 @@ namespace Hackaton.Api.Test.Medico
             // Arrange
             var query = new GetMedicoQuery { Id = 999 }; // ID que não existe
             _mockMedicoRepository.Setup(repo => repo.GetAsync(query.Id, query.CRM, query.Email, query.Ativo, query.DataNascimento, It.IsAny<CancellationToken>()))
-                                 .ReturnsAsync(new List<Domain.Models.Medico>());
+                                 .ReturnsAsync(new List<Models.Medico>());
 
             // Act
             var resultado = await _handler.Handle(query, CancellationToken.None);

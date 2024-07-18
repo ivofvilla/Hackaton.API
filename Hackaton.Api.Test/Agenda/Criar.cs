@@ -36,7 +36,7 @@ namespace Hackaton.Api.Test.Agenda
 
             // Assert
             resultado.Should().BeFalse();
-            _mockRepositorioAgenda.Verify(repo => repo.CreateAsync(It.IsAny<Domain.Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never); ;
+            _mockRepositorioAgenda.Verify(repo => repo.CreateAsync(It.IsAny<Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never); ;
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace Hackaton.Api.Test.Agenda
             var comando = new CreateAgendaCommand { IdPaciente = 1, IdMedico = 1, DataAgendamento = DateTime.Now };
             _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());
-            _mockRepositorioAgenda.Setup(repo => repo.CreateAsync(It.IsAny<Domain.Models.Agenda>(), It.IsAny<CancellationToken>()))
+            _mockRepositorioAgenda.Setup(repo => repo.CreateAsync(It.IsAny<Models.Agenda>(), It.IsAny<CancellationToken>()))
                                  .Returns(Task.CompletedTask);
 
             // Act
@@ -54,7 +54,7 @@ namespace Hackaton.Api.Test.Agenda
 
             // Assert
             resultado.Should().BeTrue();
-            _mockRepositorioAgenda.Verify(repo => repo.CreateAsync(It.IsAny<Domain.Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mockRepositorioAgenda.Verify(repo => repo.CreateAsync(It.IsAny<Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

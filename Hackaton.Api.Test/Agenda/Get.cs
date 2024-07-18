@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hackaton.Api.Domain.Queries.Agenda.Get;
 using Hackaton.Api.Repository.Interface;
-using Hackaton.Api.Domain.Models;
+using Hackaton.Models;
 using System.Collections.Generic;
 using FluentAssertions;
 
@@ -34,9 +34,9 @@ namespace Hackaton.Api.Test.Agenda
                 EhMedico = true
             };
 
-            var agendamentos = new List<Domain.Models.Agenda>
+            var agendamentos = new List<Models.Agenda>
         {
-            new Domain.Models.Agenda(3, 2, DateTime.Now) { Id = 1 }
+            new Models.Agenda(3, 2, DateTime.Now) { Id = 1 }
         };
 
             _mockRepositorioAgenda.Setup(repo => repo.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, It.IsAny<CancellationToken>()))
@@ -64,7 +64,7 @@ namespace Hackaton.Api.Test.Agenda
                 EhMedico = true
             };
 
-            var agendamentos = new List<Domain.Models.Agenda>();
+            var agendamentos = new List<Models.Agenda>();
 
             _mockRepositorioAgenda.Setup(repo => repo.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, It.IsAny<CancellationToken>()))
                                   .ReturnsAsync(agendamentos);

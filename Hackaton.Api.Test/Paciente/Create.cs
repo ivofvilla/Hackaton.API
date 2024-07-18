@@ -6,7 +6,7 @@ using FluentAssertions;
 using FluentValidation;
 using Hackaton.Api.Domain.Commands.Paciente.Create;
 using Hackaton.Api.Repository.Interface;
-using Hackaton.Api.Domain.Models;
+using Hackaton.Models;
 
 
 namespace Hackaton.Api.Test.Paciente
@@ -39,8 +39,8 @@ namespace Hackaton.Api.Test.Paciente
 
             // Assert
             resultado.Should().BeFalse();
-            _mockPacienteRepository.Verify(repo => repo.CreateAsync(It.IsAny<Domain.Models.Paciente>(), It.IsAny<CancellationToken>()), Times.Never);
-            _mockLoginRepository.Verify(repo => repo.CreateAsync(It.IsAny<Domain.Models.Login>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockPacienteRepository.Verify(repo => repo.CreateAsync(It.IsAny<Models.Paciente>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockLoginRepository.Verify(repo => repo.CreateAsync(It.IsAny<Models.Login>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
@@ -56,9 +56,9 @@ namespace Hackaton.Api.Test.Paciente
             };
             _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new FluentValidation.Results.ValidationResult());
-            _mockPacienteRepository.Setup(repo => repo.CreateAsync(It.IsAny<Domain.Models.Paciente>(), It.IsAny<CancellationToken>()))
+            _mockPacienteRepository.Setup(repo => repo.CreateAsync(It.IsAny<Models.Paciente>(), It.IsAny<CancellationToken>()))
                                    .Returns(Task.CompletedTask);
-            _mockLoginRepository.Setup(repo => repo.CreateAsync(It.IsAny<Domain.Models.Login>(), It.IsAny<CancellationToken>()))
+            _mockLoginRepository.Setup(repo => repo.CreateAsync(It.IsAny<Models.Login>(), It.IsAny<CancellationToken>()))
                                 .Returns(Task.CompletedTask);
 
             // Act
@@ -66,8 +66,8 @@ namespace Hackaton.Api.Test.Paciente
 
             // Assert
             resultado.Should().BeTrue();
-            _mockPacienteRepository.Verify(repo => repo.CreateAsync(It.IsAny<Domain.Models.Paciente>(), It.IsAny<CancellationToken>()), Times.Once);
-            _mockLoginRepository.Verify(repo => repo.CreateAsync(It.Is<Domain.Models.Login>(l => l.Email == command.Email && l.Senha == command.Senha), It.IsAny<CancellationToken>()), Times.Once);
+            _mockPacienteRepository.Verify(repo => repo.CreateAsync(It.IsAny<Models.Paciente>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mockLoginRepository.Verify(repo => repo.CreateAsync(It.Is<Models.Login>(l => l.Email == command.Email && l.Senha == command.Senha), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

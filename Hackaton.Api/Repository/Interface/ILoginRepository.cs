@@ -1,6 +1,6 @@
 ﻿using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Threading;
-using Hackaton.Api.Domain.Models;
+using Hackaton.Models;
 
 namespace Hackaton.Api.Repository.Interface
 {

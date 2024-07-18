@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Hackaton.Api.Domain.Models
+namespace Hackaton.Models
 {
     [Table(name: "Login", Schema = "dbo")]
     public class Login

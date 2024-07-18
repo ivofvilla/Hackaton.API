@@ -1,6 +1,4 @@
-﻿using Hackaton.Api.Domain.Models;
-using Hackaton.Api.Domain.Queries.Agenda.Get;
-using MediatR;
+﻿using MediatR;
 using System.Security.Cryptography;
 
 namespace Hackaton.Api.Domain.Queries.Medico.Get

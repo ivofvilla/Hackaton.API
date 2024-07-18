@@ -7,7 +7,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Hackaton.Api.Domain.Commands.Medico.Delete;
 using Hackaton.Api.Repository.Interface;
-using Hackaton.Api.Domain.Models;
+using Hackaton.Models;
 
 
 namespace Hackaton.Api.Test.Medico
@@ -39,7 +39,7 @@ namespace Hackaton.Api.Test.Medico
             // Assert
             resultado.Should().BeFalse();
             _mockMedicoRepository.Verify(repo => repo.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()), Times.Never);
-            _mockMedicoRepository.Verify(repo => repo.DeleteLogicAsync(It.IsAny<Domain.Models.Medico>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockMedicoRepository.Verify(repo => repo.DeleteLogicAsync(It.IsAny<Models.Medico>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
@@ -50,21 +50,21 @@ namespace Hackaton.Api.Test.Medico
             _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());
             _mockMedicoRepository.Setup(repo => repo.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))
-                                 .ReturnsAsync((Domain.Models.Medico)null);
+                                 .ReturnsAsync((Models.Medico)null);
 
             // Act
             var resultado = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
             resultado.Should().BeFalse();
-            _mockMedicoRepository.Verify(repo => repo.DeleteLogicAsync(It.IsAny<Domain.Models.Medico>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockMedicoRepository.Verify(repo => repo.DeleteLogicAsync(It.IsAny<Models.Medico>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
         public async Task Handle_DeveMarcarMedicoComoInativoEChamarDeleteLogicAsync()
         {
             // Arrange
-            var medico = new Domain.Models.Medico { Id = 1, Nome = "Dr. José", Ativo = true };
+            var medico = new Models.Medico { Id = 1, Nome = "Dr. José", Ativo = true };
             var command = new DeleteMedicoCommand { Id = 1 };
             _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());

@@ -7,7 +7,6 @@ using FluentValidation;
 using FluentValidation.Results;
 using Hackaton.Api.Domain.Commands.Medico.Update;
 using Hackaton.Api.Repository.Interface;
-using Hackaton.Api.Domain.Models;
 
 
 namespace Hackaton.Api.Test.Medico
@@ -39,7 +38,7 @@ namespace Hackaton.Api.Test.Medico
             // Assert
             resultado.Should().BeFalse();
             _mockMedicoRepository.Verify(repo => repo.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()), Times.Never);
-            _mockMedicoRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Medico>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockMedicoRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Models.Medico>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
@@ -50,14 +49,14 @@ namespace Hackaton.Api.Test.Medico
             _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());
             _mockMedicoRepository.Setup(repo => repo.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))
-                                 .ReturnsAsync((Domain.Models.Medico)null);
+                                 .ReturnsAsync((Models.Medico)null);
 
             // Act
             var resultado = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
             resultado.Should().BeFalse();
-            _mockMedicoRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Medico>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockMedicoRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Models.Medico>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
@@ -73,7 +72,7 @@ namespace Hackaton.Api.Test.Medico
                 CRM = "123456",
                 Especialidade = "Cardiologia"
             };
-            var medico = new Domain.Models.Medico
+            var medico = new Models.Medico
             {
                 Id = command.Id,
                 Nome = "Antônio",

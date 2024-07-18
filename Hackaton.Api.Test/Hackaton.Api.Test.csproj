@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Hackaton.Api\Hackaton.Api.csproj" />
+    <ProjectReference Include="..\Hackaton.Models\Hackaton.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

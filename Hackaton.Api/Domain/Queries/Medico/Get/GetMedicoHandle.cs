@@ -1,5 +1,4 @@
-﻿using Hackaton.Api.Domain.Models;
-using Hackaton.Api.Repository.Interface;
+﻿using Hackaton.Api.Repository.Interface;
 using MediatR;
 
 namespace Hackaton.Api.Domain.Queries.Medico.Get

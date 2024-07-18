@@ -16,7 +16,9 @@ namespace Hackaton.Api.Domain.Queries.Paciente.Get
         {   
             var result = await _pacienteRepository.GetByIdAsync(query.Id,cancellationToken);
             var paciente = new GetPacienteResult();
-            paciente.Pacientes.AddRange(result);
+
+            if(result is not null)
+                paciente.Pacientes.AddRange(result);
 
             return paciente;
         }

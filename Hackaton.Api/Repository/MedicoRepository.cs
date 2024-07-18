@@ -1,5 +1,5 @@
 ﻿using Hackaton.Api.Data;
-using Hackaton.Api.Domain.Models;
+using Hackaton.Models;
 using Hackaton.Api.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

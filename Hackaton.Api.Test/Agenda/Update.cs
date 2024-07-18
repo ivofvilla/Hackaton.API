@@ -7,7 +7,6 @@ using FluentValidation;
 using FluentValidation.Results;
 using Hackaton.Api.Domain.Commands.Agenda.Update;
 using Hackaton.Api.Repository.Interface;
-using Hackaton.Api.Domain.Models;
 
 namespace Hackaton.Api.Test.Agenda
 {
@@ -42,7 +41,7 @@ namespace Hackaton.Api.Test.Agenda
             // Assert
             resultado.Should().BeFalse();
             _mockRepositorioAgenda.Verify(repo => repo.GetAgendamentoAsync(It.IsAny<int>(), null, null, null, It.IsAny<CancellationToken>()), Times.Never);
-            _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(It.IsAny<Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
@@ -53,7 +52,7 @@ namespace Hackaton.Api.Test.Agenda
             _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());
             _mockRepositorioAgenda.Setup(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()))
-                                  .ReturnsAsync((Domain.Models.Agenda)null);
+                                  .ReturnsAsync((Models.Agenda)null);
 
             // Act
             var resultado = await _manipulador.Handle(comando);
@@ -61,7 +60,7 @@ namespace Hackaton.Api.Test.Agenda
             // Assert
             resultado.Should().BeFalse();
             _mockRepositorioAgenda.Verify(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()), Times.Once);
-            _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(It.IsAny<Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
@@ -69,7 +68,7 @@ namespace Hackaton.Api.Test.Agenda
         {
             // Arrange
             var comando = new UpdateAgendaCommand { Id = 1, NovaDataAgendamento = DateTime.Now.AddDays(1) };
-            var agendamento = new Domain.Models.Agenda(1, 1, DateTime.Now) { Id = comando.Id };
+            var agendamento = new Models.Agenda(1, 1, DateTime.Now) { Id = comando.Id };
 
             _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());

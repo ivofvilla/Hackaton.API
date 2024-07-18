@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System;
+using System.Collections.Generic;
 
-namespace Hackaton.Api.Domain.Models
+namespace Hackaton.Models
 {
     [Table(name: "Agenda", Schema = "dbo")]
     public class Agenda

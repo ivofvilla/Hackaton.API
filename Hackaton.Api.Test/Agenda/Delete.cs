@@ -6,7 +6,7 @@ using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using Hackaton.Api.Domain.Commands.Agenda.Delete;
-using Hackaton.Api.Domain.Models;
+using Hackaton.Models;
 using Hackaton.Api.Repository.Interface;
 
 namespace Hackaton.Api.Test.Agenda
@@ -38,7 +38,7 @@ namespace Hackaton.Api.Test.Agenda
             // Assert
             resultado.Should().BeFalse();
             _mockRepositorioAgenda.Verify(repo => repo.GetByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Never);
-            _mockRepositorioAgenda.Verify(repo => repo.DeleteLogicAsync(It.IsAny<Domain.Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockRepositorioAgenda.Verify(repo => repo.DeleteLogicAsync(It.IsAny<Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Hackaton.Api.Test.Agenda
             _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());
             _mockRepositorioAgenda.Setup(repo => repo.GetByIdAsync(comando.Id, It.IsAny<CancellationToken>()))
-                                  .ReturnsAsync((Domain.Models.Agenda)null);
+                                  .ReturnsAsync((Models.Agenda)null);
 
             // Act
             var resultado = await _manipulador.Handle(comando);
@@ -57,7 +57,7 @@ namespace Hackaton.Api.Test.Agenda
             // Assert
             resultado.Should().BeFalse();
             _mockRepositorioAgenda.Verify(repo => repo.GetByIdAsync(comando.Id, It.IsAny<CancellationToken>()), Times.Once);
-            _mockRepositorioAgenda.Verify(repo => repo.DeleteLogicAsync(It.IsAny<Domain.Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockRepositorioAgenda.Verify(repo => repo.DeleteLogicAsync(It.IsAny<Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace Hackaton.Api.Test.Agenda
         {
             // Arrange
             var comando = new DeleteAgendamentoCommand { Id = 1 };
-            var agendamento = new Domain.Models.Agenda(1, 1, DateTime.Now) { Id = comando.Id, Ativo = true };
+            var agendamento = new Models.Agenda(1, 1, DateTime.Now) { Id = comando.Id, Ativo = true };
 
             _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());

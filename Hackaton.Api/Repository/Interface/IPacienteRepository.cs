@@ -1,4 +1,4 @@
-﻿using Hackaton.Api.Domain.Models;
+﻿using Hackaton.Models;
 
 namespace Hackaton.Api.Repository.Interface
 {

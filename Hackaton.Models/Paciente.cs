@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
+using System;
+using System.Collections.Generic;
 
-namespace Hackaton.Api.Domain.Models
+namespace Hackaton.Models
 {
     [Table(name: "Paciente", Schema = "dbo")]
     public class Paciente

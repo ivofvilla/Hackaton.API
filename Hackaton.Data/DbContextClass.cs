@@ -1,7 +1,6 @@
 ﻿using Hackaton.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace Hackaton.Api.Data
+namespace Hackaton.Data
 {
     public class DbContextClass : DbContext
     {

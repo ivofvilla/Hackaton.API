@@ -1,6 +1,6 @@
 ﻿using Hackaton.Api.Data;
-using Hackaton.Api.Domain.Models;
 using Hackaton.Api.Repository.Interface;
+using Hackaton.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 

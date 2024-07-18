@@ -7,7 +7,7 @@ using FluentValidation;
 using System.Collections.Generic;
 using Hackaton.Api.Domain.Commands.Paciente.Update;
 using Hackaton.Api.Repository.Interface;
-using Hackaton.Api.Domain.Models;
+using Hackaton.Models;
 
 
 namespace Hackaton.Api.Test.Paciente
@@ -38,7 +38,7 @@ namespace Hackaton.Api.Test.Paciente
 
         // Assert
         resultado.Should().BeFalse();
-        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Paciente>(), It.IsAny<CancellationToken>()), Times.Never);
+        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Models.Paciente>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -52,14 +52,14 @@ namespace Hackaton.Api.Test.Paciente
             Email = "joao@example.com",
             DataNascimento = new DateTime(1985, 3, 10)
         };
-        var pacienteExistente = new Domain.Models.Paciente("Antônio Santos", "antonio@example.com", new DateTime(1990, 6, 20));
+        var pacienteExistente = new Models.Paciente("Antônio Santos", "antonio@example.com", new DateTime(1990, 6, 20));
         pacienteExistente.Id = 1;
-        var listaPacientes = new List<Domain.Models.Paciente> { pacienteExistente };
+        var listaPacientes = new List<Models.Paciente> { pacienteExistente };
         _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                       .ReturnsAsync(new FluentValidation.Results.ValidationResult());
         _mockPacienteRepository.Setup(repo => repo.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))
                                .ReturnsAsync(listaPacientes);
-        _mockPacienteRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Paciente>(), It.IsAny<CancellationToken>()))
+        _mockPacienteRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Models.Paciente>(), It.IsAny<CancellationToken>()))
                                .Returns(Task.CompletedTask);
 
         // Act
@@ -67,7 +67,7 @@ namespace Hackaton.Api.Test.Paciente
 
         // Assert
         resultado.Should().BeTrue();
-        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.Is<Domain.Models.Paciente>(p => p.Id == command.Id && p.Nome == command.Nome && p.Email == command.Email && p.DataNascimento == command.DataNascimento), It.IsAny<CancellationToken>()), Times.Once);
+        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.Is<Models.Paciente>(p => p.Id == command.Id && p.Nome == command.Nome && p.Email == command.Email && p.DataNascimento == command.DataNascimento), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -78,14 +78,14 @@ namespace Hackaton.Api.Test.Paciente
         _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                       .ReturnsAsync(new FluentValidation.Results.ValidationResult());
         _mockPacienteRepository.Setup(repo => repo.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))
-                               .ReturnsAsync((List<Domain.Models.Paciente>)null);
+                               .ReturnsAsync((List<Models.Paciente>)null);
 
         // Act
         var resultado = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         resultado.Should().BeFalse();
-        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Paciente>(), It.IsAny<CancellationToken>()), Times.Never);
+        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Models.Paciente>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 }
 }

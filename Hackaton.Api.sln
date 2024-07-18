@@ -11,7 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "init-db", "init-db", "{DF5C
 		init-db\entrypoint.sh = init-db\entrypoint.sh
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackaton.Api.Test", "Hackaton.Api.Test\Hackaton.Api.Test.csproj", "{430591B8-65B3-464B-8162-E462EACDB7C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackaton.Api.Test", "Hackaton.Api.Test\Hackaton.Api.Test.csproj", "{430591B8-65B3-464B-8162-E462EACDB7C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackaton.Worker", "Hackaton.Worker\Hackaton.Worker.csproj", "{6C681F5C-53B8-41CB-9303-05338FB31AC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackaton.Models", "Hackaton.Models\Hackaton.Models.csproj", "{D7648A53-75DE-496B-8638-2F9D4F074AFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{430591B8-65B3-464B-8162-E462EACDB7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{430591B8-65B3-464B-8162-E462EACDB7C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{430591B8-65B3-464B-8162-E462EACDB7C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C681F5C-53B8-41CB-9303-05338FB31AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C681F5C-53B8-41CB-9303-05338FB31AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C681F5C-53B8-41CB-9303-05338FB31AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C681F5C-53B8-41CB-9303-05338FB31AC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7648A53-75DE-496B-8638-2F9D4F074AFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7648A53-75DE-496B-8638-2F9D4F074AFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7648A53-75DE-496B-8638-2F9D4F074AFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7648A53-75DE-496B-8638-2F9D4F074AFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
