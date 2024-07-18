@@ -9,80 +9,83 @@ using Hackaton.Api.Domain.Commands.Agenda.Update;
 using Hackaton.Api.Repository.Interface;
 using Hackaton.Api.Domain.Models;
 
-public class UpdateAgendaHandlerTests
+namespace Hackaton.Api.Test.Agenda
 {
-    private readonly Mock<IMedicoRepository> _mockRepositorioMedico;
-    private readonly Mock<IPacienteRepository> _mockRepositorioPaciente;
-    private readonly Mock<IAgendaRepository> _mockRepositorioAgenda;
-    private readonly Mock<IValidator<UpdateAgendaCommand>> _mockValidador;
-    private readonly UpdateAgendaHandler _manipulador;
-
-    public UpdateAgendaHandlerTests()
+    public class UpdateAgendaHandlerTests
     {
-        _mockRepositorioMedico = new Mock<IMedicoRepository>();
-        _mockRepositorioPaciente = new Mock<IPacienteRepository>();
-        _mockRepositorioAgenda = new Mock<IAgendaRepository>();
-        _mockValidador = new Mock<IValidator<UpdateAgendaCommand>>();
-        _manipulador = new UpdateAgendaHandler(_mockRepositorioMedico.Object, _mockRepositorioAgenda.Object, _mockRepositorioPaciente.Object, _mockValidador.Object);
-    }
+        private readonly Mock<IMedicoRepository> _mockRepositorioMedico;
+        private readonly Mock<IPacienteRepository> _mockRepositorioPaciente;
+        private readonly Mock<IAgendaRepository> _mockRepositorioAgenda;
+        private readonly Mock<IValidator<UpdateAgendaCommand>> _mockValidador;
+        private readonly UpdateAgendaHandler _manipulador;
 
-    [Fact]
-    public async Task Handle_DeveRetornarFalso_QuandoValidacaoFalhar()
-    {
-        // Arrange
-        var comando = new UpdateAgendaCommand { Id = 1, NovaDataAgendamento = DateTime.Now.AddDays(1) };
-        _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
-                      .ReturnsAsync(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Erro") }));
+        public UpdateAgendaHandlerTests()
+        {
+            _mockRepositorioMedico = new Mock<IMedicoRepository>();
+            _mockRepositorioPaciente = new Mock<IPacienteRepository>();
+            _mockRepositorioAgenda = new Mock<IAgendaRepository>();
+            _mockValidador = new Mock<IValidator<UpdateAgendaCommand>>();
+            _manipulador = new UpdateAgendaHandler(_mockRepositorioMedico.Object, _mockRepositorioAgenda.Object, _mockRepositorioPaciente.Object, _mockValidador.Object);
+        }
 
-        // Act
-        var resultado = await _manipulador.Handle(comando);
+        [Fact]
+        public async Task Handle_DeveRetornarFalso_QuandoValidacaoFalhar()
+        {
+            // Arrange
+            var comando = new UpdateAgendaCommand { Id = 1, NovaDataAgendamento = DateTime.Now.AddDays(1) };
+            _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
+                          .ReturnsAsync(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Erro") }));
 
-        // Assert
-        resultado.Should().BeFalse();
-        _mockRepositorioAgenda.Verify(repo => repo.GetAgendamentoAsync(It.IsAny<int>(), null, null, null, It.IsAny<CancellationToken>()), Times.Never);
-        _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(It.IsAny<Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
-    }
+            // Act
+            var resultado = await _manipulador.Handle(comando);
 
-    [Fact]
-    public async Task Handle_DeveRetornarFalso_QuandoAgendamentoNaoForEncontrado()
-    {
-        // Arrange
-        var comando = new UpdateAgendaCommand { Id = 1, NovaDataAgendamento = DateTime.Now.AddDays(1) };
-        _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
-                      .ReturnsAsync(new ValidationResult());
-        _mockRepositorioAgenda.Setup(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()))
-                              .ReturnsAsync((Agenda)null);
+            // Assert
+            resultado.Should().BeFalse();
+            _mockRepositorioAgenda.Verify(repo => repo.GetAgendamentoAsync(It.IsAny<int>(), null, null, null, It.IsAny<CancellationToken>()), Times.Never);
+            _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
+        }
 
-        // Act
-        var resultado = await _manipulador.Handle(comando);
+        [Fact]
+        public async Task Handle_DeveRetornarFalso_QuandoAgendamentoNaoForEncontrado()
+        {
+            // Arrange
+            var comando = new UpdateAgendaCommand { Id = 1, NovaDataAgendamento = DateTime.Now.AddDays(1) };
+            _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
+                          .ReturnsAsync(new ValidationResult());
+            _mockRepositorioAgenda.Setup(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()))
+                                  .ReturnsAsync((Domain.Models.Agenda)null);
 
-        // Assert
-        resultado.Should().BeFalse();
-        _mockRepositorioAgenda.Verify(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()), Times.Once);
-        _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(It.IsAny<Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
-    }
+            // Act
+            var resultado = await _manipulador.Handle(comando);
 
-    [Fact]
-    public async Task Handle_DeveRetornarVerdadeiro_QuandoAgendamentoForEncontradoEAtualizado()
-    {
-        // Arrange
-        var comando = new UpdateAgendaCommand { Id = 1, NovaDataAgendamento = DateTime.Now.AddDays(1) };
-        var agendamento = new Agenda(1, 1, DateTime.Now) { Id = comando.Id };
+            // Assert
+            resultado.Should().BeFalse();
+            _mockRepositorioAgenda.Verify(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()), Times.Once);
+            _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Agenda>(), It.IsAny<CancellationToken>()), Times.Never);
+        }
 
-        _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
-                      .ReturnsAsync(new ValidationResult());
-        _mockRepositorioAgenda.Setup(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()))
-                              .ReturnsAsync(agendamento);
-        _mockRepositorioAgenda.Setup(repo => repo.UpdateAsync(agendamento, It.IsAny<CancellationToken>()))
-                              .Returns(Task.CompletedTask);
+        [Fact]
+        public async Task Handle_DeveRetornarVerdadeiro_QuandoAgendamentoForEncontradoEAtualizado()
+        {
+            // Arrange
+            var comando = new UpdateAgendaCommand { Id = 1, NovaDataAgendamento = DateTime.Now.AddDays(1) };
+            var agendamento = new Domain.Models.Agenda(1, 1, DateTime.Now) { Id = comando.Id };
 
-        // Act
-        var resultado = await _manipulador.Handle(comando);
+            _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
+                          .ReturnsAsync(new ValidationResult());
+            _mockRepositorioAgenda.Setup(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()))
+                                  .ReturnsAsync(agendamento);
+            _mockRepositorioAgenda.Setup(repo => repo.UpdateAsync(agendamento, It.IsAny<CancellationToken>()))
+                                  .Returns(Task.CompletedTask);
 
-        // Assert
-        resultado.Should().BeTrue();
-        agendamento.DataAgendamento.Should().Be(comando.NovaDataAgendamento);
-        _mockRepositorioAgenda.Verify(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()), Times.Once);
-        _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(agendamento, It.IsAny<CancellationToken>()), Times.Once);
+            // Act
+            var resultado = await _manipulador.Handle(comando);
+
+            // Assert
+            resultado.Should().BeTrue();
+            agendamento.DataAgendamento.Should().Be(comando.NovaDataAgendamento);
+            _mockRepositorioAgenda.Verify(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()), Times.Once);
+            _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(agendamento, It.IsAny<CancellationToken>()), Times.Once);
+        }
     }
 }

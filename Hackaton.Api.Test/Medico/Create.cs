@@ -10,71 +10,74 @@ using Hackaton.Api.Repository.Interface;
 using Hackaton.Api.Domain.Models;
 using System.Collections.Generic;
 
-public class CreateMedicoHandlerTests
+namespace Hackaton.Api.Test.Medico
 {
-    private readonly Mock<IMedicoRepository> _mockMedicoRepository;
-    private readonly Mock<ILoginRepository> _mockLoginRepository;
-    private readonly Mock<IValidator<CreateMedicoCommand>> _mockValidator;
-    private readonly CreateMedicoHandler _handler;
-
-    public CreateMedicoHandlerTests()
+    public class CreateMedicoHandlerTests
     {
-        _mockMedicoRepository = new Mock<IMedicoRepository>();
-        _mockLoginRepository = new Mock<ILoginRepository>();
-        _mockValidator = new Mock<IValidator<CreateMedicoCommand>>();
-        _handler = new CreateMedicoHandler(_mockMedicoRepository.Object, _mockValidator.Object, _mockLoginRepository.Object);
-    }
+        private readonly Mock<IMedicoRepository> _mockMedicoRepository;
+        private readonly Mock<ILoginRepository> _mockLoginRepository;
+        private readonly Mock<IValidator<CreateMedicoCommand>> _mockValidator;
+        private readonly CreateMedicoHandler _handler;
 
-    [Fact]
-    public async Task Handle_DeveRetornarFalso_QuandoValidacaoFalhar()
-    {
-        // Arrange
-        var command = new CreateMedicoCommand { Nome = "Dr. João", Email = "email@example.com", Senha = "senha123", DataNascimento = DateTime.Now, CRM = "123456", Especialidade = "Cardiologia" };
-        _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
-                      .ReturnsAsync(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Nome", "Erro") }));
+        public CreateMedicoHandlerTests()
+        {
+            _mockMedicoRepository = new Mock<IMedicoRepository>();
+            _mockLoginRepository = new Mock<ILoginRepository>();
+            _mockValidator = new Mock<IValidator<CreateMedicoCommand>>();
+            _handler = new CreateMedicoHandler(_mockMedicoRepository.Object, _mockValidator.Object, _mockLoginRepository.Object);
+        }
 
-        // Act
-        var resultado = await _handler.Handle(command, CancellationToken.None);
+        [Fact]
+        public async Task Handle_DeveRetornarFalso_QuandoValidacaoFalhar()
+        {
+            // Arrange
+            var command = new CreateMedicoCommand { Nome = "Dr. João", Email = "email@example.com", Senha = "senha123", DataNascimento = DateTime.Now, CRM = "123456", Especialidade = "Cardiologia" };
+            _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
+                          .ReturnsAsync(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Nome", "Erro") }));
 
-        // Assert
-        resultado.Should().BeFalse();
-        _mockMedicoRepository.Verify(repo => repo.CreateAsync(It.IsAny<Medico>(), It.IsAny<CancellationToken>()), Times.Never);
-        _mockLoginRepository.Verify(repo => repo.CreateAsync(It.IsAny<Login>(), It.IsAny<CancellationToken>()), Times.Never);
-    }
+            // Act
+            var resultado = await _handler.Handle(command, CancellationToken.None);
 
-    [Fact]
-    public async Task Handle_DeveCriarMedicoELogin_QuandoValidacaoForBemSucedida()
-    {
-        // Arrange
-        var command = new CreateMedicoCommand { Nome = "Dr. João", Email = "email@example.com", Senha = "senha123", DataNascimento = DateTime.Now, CRM = "123456", Especialidade = "Cardiologia" };
-        _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
-                      .ReturnsAsync(new ValidationResult());
+            // Assert
+            resultado.Should().BeFalse();
+            _mockMedicoRepository.Verify(repo => repo.CreateAsync(It.IsAny<Domain.Models.Medico>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mockLoginRepository.Verify(repo => repo.CreateAsync(It.IsAny<Domain.Models.Login>(), It.IsAny<CancellationToken>()), Times.Never);
+        }
 
-        // Act
-        var resultado = await _handler.Handle(command, CancellationToken.None);
+        [Fact]
+        public async Task Handle_DeveCriarMedicoELogin_QuandoValidacaoForBemSucedida()
+        {
+            // Arrange
+            var command = new CreateMedicoCommand { Nome = "Dr. João", Email = "email@example.com", Senha = "senha123", DataNascimento = DateTime.Now, CRM = "123456", Especialidade = "Cardiologia" };
+            _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
+                          .ReturnsAsync(new ValidationResult());
 
-        // Assert
-        resultado.Should().BeTrue();
-        _mockMedicoRepository.Verify(repo => repo.CreateAsync(It.Is<Medico>(m => m.Nome == command.Nome && m.Email == command.Email), It.IsAny<CancellationToken>()), Times.Once);
-        _mockLoginRepository.Verify(repo => repo.CreateAsync(It.Is<Login>(l => l.Email == command.Email && l.Senha == command.Senha), It.IsAny<CancellationToken>()), Times.Once);
-    }
+            // Act
+            var resultado = await _handler.Handle(command, CancellationToken.None);
 
-    [Fact]
-    public async Task Handle_DeveRetornarFalso_QuandoExcecaoForLancada()
-    {
-        // Arrange
-        var command = new CreateMedicoCommand { Nome = "Dr. João", Email = "email@example.com", Senha = "senha123", DataNascimento = DateTime.Now, CRM = "123456", Especialidade = "Cardiologia" };
-        _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
-                      .ReturnsAsync(new ValidationResult());
-        _mockMedicoRepository.Setup(repo => repo.CreateAsync(It.IsAny<Medico>(), It.IsAny<CancellationToken>()))
-                             .ThrowsAsync(new Exception("Erro de teste"));
+            // Assert
+            resultado.Should().BeTrue();
+            _mockMedicoRepository.Verify(repo => repo.CreateAsync(It.Is<Domain.Models.Medico>(m => m.Nome == command.Nome && m.Email == command.Email), It.IsAny<CancellationToken>()), Times.Once);
+            _mockLoginRepository.Verify(repo => repo.CreateAsync(It.Is<Domain.Models.Login>(l => l.Email == command.Email && l.Senha == command.Senha), It.IsAny<CancellationToken>()), Times.Once);
+        }
 
-        // Act
-        var resultado = await _handler.Handle(command, CancellationToken.None);
+        [Fact]
+        public async Task Handle_DeveRetornarFalso_QuandoExcecaoForLancada()
+        {
+            // Arrange
+            var command = new CreateMedicoCommand { Nome = "Dr. João", Email = "email@example.com", Senha = "senha123", DataNascimento = DateTime.Now, CRM = "123456", Especialidade = "Cardiologia" };
+            _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
+                          .ReturnsAsync(new ValidationResult());
+            _mockMedicoRepository.Setup(repo => repo.CreateAsync(It.IsAny<Domain.Models.Medico>(), It.IsAny<CancellationToken>()))
+                                 .ThrowsAsync(new Exception("Erro de teste"));
 
-        // Assert
-        resultado.Should().BeFalse();
-        _mockMedicoRepository.Verify(repo => repo.CreateAsync(It.IsAny<Medico>(), It.IsAny<CancellationToken>()), Times.Once);
-        _mockLoginRepository.Verify(repo => repo.CreateAsync(It.IsAny<Login>(), It.IsAny<CancellationToken>()), Times.Never);
+            // Act
+            var resultado = await _handler.Handle(command, CancellationToken.None);
+
+            // Assert
+            resultado.Should().BeFalse();
+            _mockMedicoRepository.Verify(repo => repo.CreateAsync(It.IsAny<Domain.Models.Medico>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mockLoginRepository.Verify(repo => repo.CreateAsync(It.IsAny<Domain.Models.Login>(), It.IsAny<CancellationToken>()), Times.Never);
+        }
     }
 }

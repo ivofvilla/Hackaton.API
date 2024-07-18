@@ -8,71 +8,74 @@ using Hackaton.Api.Domain.Models;
 using System.Collections.Generic;
 using FluentAssertions;
 
-public class GetAgendaHandleTests
+namespace Hackaton.Api.Test.Agenda
 {
-    private readonly Mock<IAgendaRepository> _mockRepositorioAgenda;
-    private readonly GetAgendaHandle _manipulador;
-
-    public GetAgendaHandleTests()
+    public class GetAgendaHandleTests
     {
-        _mockRepositorioAgenda = new Mock<IAgendaRepository>();
-        _manipulador = new GetAgendaHandle(_mockRepositorioAgenda.Object);
-    }
+        private readonly Mock<IAgendaRepository> _mockRepositorioAgenda;
+        private readonly GetAgendaHandle _manipulador;
 
-    [Fact]
-    public async Task Handle_DeveRetornarResultadosCorretamente()
-    {
-        // Arrange
-        var query = new GetAgendaQuery
+        public GetAgendaHandleTests()
         {
-            Id = 1,
-            IdMedico = 2,
-            IdPaciente = 3,
-            DataAgendamento = DateTime.Now,
-            EhMedico = true
+            _mockRepositorioAgenda = new Mock<IAgendaRepository>();
+            _manipulador = new GetAgendaHandle(_mockRepositorioAgenda.Object);
+        }
+
+        [Fact]
+        public async Task Handle_DeveRetornarResultadosCorretamente()
+        {
+            // Arrange
+            var query = new GetAgendaQuery
+            {
+                Id = 1,
+                IdMedico = 2,
+                IdPaciente = 3,
+                DataAgendamento = DateTime.Now,
+                EhMedico = true
+            };
+
+            var agendamentos = new List<Domain.Models.Agenda>
+        {
+            new Domain.Models.Agenda(3, 2, DateTime.Now) { Id = 1 }
         };
 
-        var agendamentos = new List<Agenda>
+            _mockRepositorioAgenda.Setup(repo => repo.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, It.IsAny<CancellationToken>()))
+                                  .ReturnsAsync(agendamentos);
+
+            // Act
+            var resultado = await _manipulador.Handle(query, CancellationToken.None);
+
+            // Assert
+            resultado.Should().NotBeNull();
+            resultado.Agendamentos.Should().BeEquivalentTo(agendamentos);
+            _mockRepositorioAgenda.Verify(repo => repo.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task Handle_DeveRetornarListaVazia_QuandoNaoExistemAgendamentos()
         {
-            new Agenda(3, 2, DateTime.Now) { Id = 1 }
-        };
+            // Arrange
+            var query = new GetAgendaQuery
+            {
+                Id = 1,
+                IdMedico = 2,
+                IdPaciente = 3,
+                DataAgendamento = DateTime.Now,
+                EhMedico = true
+            };
 
-        _mockRepositorioAgenda.Setup(repo => repo.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, It.IsAny<CancellationToken>()))
-                              .ReturnsAsync(agendamentos);
+            var agendamentos = new List<Domain.Models.Agenda>();
 
-        // Act
-        var resultado = await _manipulador.Handle(query, CancellationToken.None);
+            _mockRepositorioAgenda.Setup(repo => repo.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, It.IsAny<CancellationToken>()))
+                                  .ReturnsAsync(agendamentos);
 
-        // Assert
-        resultado.Should().NotBeNull();
-        resultado.Agendamentos.Should().BeEquivalentTo(agendamentos);
-        _mockRepositorioAgenda.Verify(repo => repo.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, It.IsAny<CancellationToken>()), Times.Once);
-    }
+            // Act
+            var resultado = await _manipulador.Handle(query, CancellationToken.None);
 
-    [Fact]
-    public async Task Handle_DeveRetornarListaVazia_QuandoNaoExistemAgendamentos()
-    {
-        // Arrange
-        var query = new GetAgendaQuery
-        {
-            Id = 1,
-            IdMedico = 2,
-            IdPaciente = 3,
-            DataAgendamento = DateTime.Now,
-            EhMedico = true
-        };
-
-        var agendamentos = new List<Agenda>();
-
-        _mockRepositorioAgenda.Setup(repo => repo.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, It.IsAny<CancellationToken>()))
-                              .ReturnsAsync(agendamentos);
-
-        // Act
-        var resultado = await _manipulador.Handle(query, CancellationToken.None);
-
-        // Assert
-        resultado.Should().NotBeNull();
-        resultado.Agendamentos.Should().BeEquivalentTo(agendamentos);
-        _mockRepositorioAgenda.Verify(repo => repo.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, It.IsAny<CancellationToken>()), Times.Once);
+            // Assert
+            resultado.Should().NotBeNull();
+            resultado.Agendamentos.Should().BeEquivalentTo(agendamentos);
+            _mockRepositorioAgenda.Verify(repo => repo.GetAsync(query.Id, query.IdMedico, query.IdPaciente, query.DataAgendamento, query.EhMedico, It.IsAny<CancellationToken>()), Times.Once);
+        }
     }
 }

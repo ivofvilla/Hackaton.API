@@ -8,53 +8,57 @@ using Hackaton.Api.Repository.Interface;
 using Hackaton.Api.Domain.Models;
 using System.Collections.Generic;
 
-public class GetMedicoHandleTests
+
+namespace Hackaton.Api.Test.Medico
 {
-    private readonly Mock<IMedicoRepository> _mockMedicoRepository;
-    private readonly GetMedicoHandle _handler;
-
-    public GetMedicoHandleTests()
+    public class GetMedicoHandleTests
     {
-        _mockMedicoRepository = new Mock<IMedicoRepository>();
-        _handler = new GetMedicoHandle(_mockMedicoRepository.Object);
-    }
+        private readonly Mock<IMedicoRepository> _mockMedicoRepository;
+        private readonly GetMedicoHandle _handler;
 
-    [Fact]
-    public async Task Handle_DeveRetornarMedicosQuandoEncontrados()
-    {
-        // Arrange
-        var query = new GetMedicoQuery { Id = 1 };
-        var medicos = new List<Medico>
+        public GetMedicoHandleTests()
         {
-            new Medico { Id = 1, Nome = "Dr. João" },
-            new Medico { Id = 2, Nome = "Dra. Maria" }
+            _mockMedicoRepository = new Mock<IMedicoRepository>();
+            _handler = new GetMedicoHandle(_mockMedicoRepository.Object);
+        }
+
+        [Fact]
+        public async Task Handle_DeveRetornarMedicosQuandoEncontrados()
+        {
+            // Arrange
+            var query = new GetMedicoQuery { Id = 1 };
+            var medicos = new List<Domain.Models.Medico>
+        {
+            new Domain.Models.Medico { Id = 1, Nome = "Dr. João" },
+            new Domain.Models.Medico { Id = 2, Nome = "Dra. Maria" }
         };
-        _mockMedicoRepository.Setup(repo => repo.GetAsync(query.Id, query.CRM, query.Email, query.Ativo, query.DataNascimento, It.IsAny<CancellationToken>()))
-                             .ReturnsAsync(medicos);
+            _mockMedicoRepository.Setup(repo => repo.GetAsync(query.Id, query.CRM, query.Email, query.Ativo, query.DataNascimento, It.IsAny<CancellationToken>()))
+                                 .ReturnsAsync(medicos);
 
-        // Act
-        var resultado = await _handler.Handle(query, CancellationToken.None);
+            // Act
+            var resultado = await _handler.Handle(query, CancellationToken.None);
 
-        // Assert
-        resultado.Should().NotBeNull();
-        resultado.Medicos.Should().NotBeNull().And.HaveCount(2);
-        resultado.Medicos.Should().Contain(m => m.Nome == "Dr. João");
-        resultado.Medicos.Should().Contain(m => m.Nome == "Dra. Maria");
-    }
+            // Assert
+            resultado.Should().NotBeNull();
+            resultado.Medicos.Should().NotBeNull().And.HaveCount(2);
+            resultado.Medicos.Should().Contain(m => m.Nome == "Dr. João");
+            resultado.Medicos.Should().Contain(m => m.Nome == "Dra. Maria");
+        }
 
-    [Fact]
-    public async Task Handle_DeveRetornarMedicosVazioQuandoNaoEncontrados()
-    {
-        // Arrange
-        var query = new GetMedicoQuery { Id = 999 }; // ID que não existe
-        _mockMedicoRepository.Setup(repo => repo.GetAsync(query.Id, query.CRM, query.Email, query.Ativo, query.DataNascimento, It.IsAny<CancellationToken>()))
-                             .ReturnsAsync(new List<Medico>());
+        [Fact]
+        public async Task Handle_DeveRetornarMedicosVazioQuandoNaoEncontrados()
+        {
+            // Arrange
+            var query = new GetMedicoQuery { Id = 999 }; // ID que não existe
+            _mockMedicoRepository.Setup(repo => repo.GetAsync(query.Id, query.CRM, query.Email, query.Ativo, query.DataNascimento, It.IsAny<CancellationToken>()))
+                                 .ReturnsAsync(new List<Domain.Models.Medico>());
 
-        // Act
-        var resultado = await _handler.Handle(query, CancellationToken.None);
+            // Act
+            var resultado = await _handler.Handle(query, CancellationToken.None);
 
-        // Assert
-        resultado.Should().NotBeNull();
-        resultado.Medicos.Should().NotBeNull().And.BeEmpty();
+            // Assert
+            resultado.Should().NotBeNull();
+            resultado.Medicos.Should().NotBeNull().And.BeEmpty();
+        }
     }
 }

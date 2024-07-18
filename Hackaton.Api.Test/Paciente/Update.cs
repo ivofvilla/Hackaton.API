@@ -9,7 +9,10 @@ using Hackaton.Api.Domain.Commands.Paciente.Update;
 using Hackaton.Api.Repository.Interface;
 using Hackaton.Api.Domain.Models;
 
-public class UpdatePacienteHandlerTests
+
+namespace Hackaton.Api.Test.Paciente
+{
+    public class UpdatePacienteHandlerTests
 {
     private readonly Mock<IPacienteRepository> _mockPacienteRepository;
     private readonly Mock<IValidator<UpdatePacienteCommand>> _mockValidator;
@@ -35,7 +38,7 @@ public class UpdatePacienteHandlerTests
 
         // Assert
         resultado.Should().BeFalse();
-        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Paciente>(), It.IsAny<CancellationToken>()), Times.Never);
+        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Paciente>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -49,27 +52,22 @@ public class UpdatePacienteHandlerTests
             Email = "joao@example.com",
             DataNascimento = new DateTime(1985, 3, 10)
         };
-        var pacienteExistente = new Paciente
-        {
-            Id = 1,
-            Nome = "Antônio Santos",
-            Email = "antonio@example.com",
-            DataNascimento = new DateTime(1990, 6, 20)
-        };
-        var listaPacientes = new List<Paciente> { pacienteExistente };
+        var pacienteExistente = new Domain.Models.Paciente("Antônio Santos", "antonio@example.com", new DateTime(1990, 6, 20));
+        pacienteExistente.Id = 1;
+        var listaPacientes = new List<Domain.Models.Paciente> { pacienteExistente };
         _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                       .ReturnsAsync(new FluentValidation.Results.ValidationResult());
         _mockPacienteRepository.Setup(repo => repo.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))
                                .ReturnsAsync(listaPacientes);
-        _mockPacienteRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Paciente>(), It.IsAny<CancellationToken>()))
-                               .ReturnsAsync(true);
+        _mockPacienteRepository.Setup(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Paciente>(), It.IsAny<CancellationToken>()))
+                               .Returns(Task.CompletedTask);
 
         // Act
         var resultado = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         resultado.Should().BeTrue();
-        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.Is<Paciente>(p => p.Id == command.Id && p.Nome == command.Nome && p.Email == command.Email && p.DataNascimento == command.DataNascimento), It.IsAny<CancellationToken>()), Times.Once);
+        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.Is<Domain.Models.Paciente>(p => p.Id == command.Id && p.Nome == command.Nome && p.Email == command.Email && p.DataNascimento == command.DataNascimento), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -80,13 +78,14 @@ public class UpdatePacienteHandlerTests
         _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                       .ReturnsAsync(new FluentValidation.Results.ValidationResult());
         _mockPacienteRepository.Setup(repo => repo.GetByIdAsync(command.Id, It.IsAny<CancellationToken>()))
-                               .ReturnsAsync((List<Paciente>)null);
+                               .ReturnsAsync((List<Domain.Models.Paciente>)null);
 
         // Act
         var resultado = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         resultado.Should().BeFalse();
-        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Paciente>(), It.IsAny<CancellationToken>()), Times.Never);
+        _mockPacienteRepository.Verify(repo => repo.UpdateAsync(It.IsAny<Domain.Models.Paciente>(), It.IsAny<CancellationToken>()), Times.Never);
     }
+}
 }
