@@ -47,7 +47,7 @@ namespace Hackaton.Api.Test.Login
             _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());
             _mockLoginRepository.Setup(repo => repo.LoginAsync(command.Email, command.Senha, It.IsAny<CancellationToken>()))
-                                .ReturnsAsync(true);
+                                .ReturnsAsync((Models.Login)null);
 
             // Act
             var resultado = await _handler.Handle(command, CancellationToken.None);
@@ -58,14 +58,14 @@ namespace Hackaton.Api.Test.Login
         }
 
         [Fact]
-        public async Task Handle_DeveRetornarFalso_QuandoLoginForMalSucedido()
+        public async Task Handle_DeveRetornarNulo_QuandoLoginForMalSucedido()
         {
             // Arrange
             var command = new CreateUsuarioCommand { Email = "email@example.com", Senha = "senha123" };
             _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());
             _mockLoginRepository.Setup(repo => repo.LoginAsync(command.Email, command.Senha, It.IsAny<CancellationToken>()))
-                                .ReturnsAsync(false);
+                                .ReturnsAsync((Models.Login)null);
 
             // Act
             var resultado = await _handler.Handle(command, CancellationToken.None);

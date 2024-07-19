@@ -20,13 +20,24 @@ namespace Hackaton.Api.Repository
             await _context.Login.AddAsync(login, cancellationToken);
         }
 
-        public Task<bool> LoginAsync(string email, string senha, CancellationToken cancellationToken)
+        public async Task<Login?> GetAsync(int id, CancellationToken cancellation)
         {
-            return _context.Login.AnyAsync(w => w.Email.Equals(email) && w.Senha.Equals(senha));
+            return _context.Login.FirstOrDefault(w => w.Id == id);
+        }
+
+        public async Task<Login?> LoginAsync(string email, string senha, CancellationToken cancellationToken)
+        {
+            return _context.Login.FirstOrDefault(w => w.Email.Equals(email) && w.Senha.Equals(senha));
         }
 
         public async Task SalvarAsync(CancellationToken cancellationToken)
         {
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task UpdateAsync(Login login, CancellationToken cancellationToken)
+        {
+            _context.Login.Update(login);
             await _context.SaveChangesAsync(cancellationToken);
         }
     }

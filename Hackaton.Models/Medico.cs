@@ -23,6 +23,7 @@ namespace Hackaton.Models
         [Column("Ativo")]
         public bool Ativo { get; set; }
         public IEnumerable<Agenda> Agendas { get; set; } = new List<Agenda>();
+        public virtual int IdAgenda { get; set; }
 
         public Medico()
         { 

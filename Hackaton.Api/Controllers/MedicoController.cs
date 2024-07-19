@@ -39,7 +39,7 @@ namespace Hackaton.Api.Controllers
         {
             var result = await _mediator.Send(medico, cancellation);
 
-            if (result != null)
+            if (result)
             {
                 return NoContent();
             }

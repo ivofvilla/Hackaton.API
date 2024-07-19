@@ -47,7 +47,9 @@ namespace Hackaton.Api.Repository
                 agendas = agendas.Where(w => w.DataAgendamento == DataAgendamento);
             }
             
-            return await agendas.ToListAsync(cancellationToken);
+            
+
+            return await agendas.Include("Medicos").Include("Pacientes").ToListAsync(cancellationToken);
         }
 
         public async Task CreateAsync(Agenda agenda, CancellationToken cancellation = default)

@@ -1,4 +1,5 @@
 ﻿using Hackaton.Api.Domain.Commands.Login.Create;
+using Hackaton.Api.Domain.Commands.Login.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
@@ -20,12 +21,28 @@ namespace Hackaton.Api.Controllers
         {
             var result = await _mediator.Send(usuario, cancellation);
 
-            if (result)
+            if (result is not null)
             {
-                return Ok("Login Efetuado!");
+                return Ok(result);
             }
 
             return BadRequest("Erro ao efetuar login!");
         }
+
+        [HttpPost]
+        [Route("api/Login/alterar/{id}")]
+        public async Task<ActionResult> alterar([FromQuery] int id, [FromBody] UpdateLoginCommand usuario, CancellationToken cancellation)
+        {
+            usuario.SetId(id);
+            var result = await _mediator.Send(usuario, cancellation);
+
+            if (result is not null)
+            {
+                return Ok("Login Alterado!");
+            }
+
+            return BadRequest("Erro ao alterar login!");
+        }
+
     }
 }

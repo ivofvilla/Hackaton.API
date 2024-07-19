@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Hackaton.Api.Domain.Commands.Login.Create
 {
-    public class CreateUsuarioHandle : IRequestHandler<CreateUsuarioCommand, bool>
+    public class CreateUsuarioHandle : IRequestHandler<CreateUsuarioCommand, int?>
     {
         private readonly ILoginRepository _loginRepository;
         private readonly IValidator<CreateUsuarioCommand> _validator;
@@ -16,15 +16,22 @@ namespace Hackaton.Api.Domain.Commands.Login.Create
             _validator = validator;
         }
 
-        public async Task<bool> Handle(CreateUsuarioCommand command, CancellationToken cancellationToken = default)
+        public async Task<int?> Handle(CreateUsuarioCommand command, CancellationToken cancellationToken = default)
         {
             var validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (!validationResult.IsValid)
             {
-                return false;
+                return null;
             }
 
-            return await _loginRepository.LoginAsync(command.Email, command.Senha, cancellationToken);
+            var login = await _loginRepository.LoginAsync(command.Email, command.Senha, cancellationToken);
+
+            if (login == null)
+            {
+                return null;
+            }
+
+            return login.Id;
         }
     }
 }
