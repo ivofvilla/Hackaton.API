@@ -34,10 +34,15 @@ namespace Hackaton.Api.Domain.Commands.Paciente.Create
             {
                 Email = command.Email,
                 Senha = command.Senha,
-                Ativo = false
+                Ativo = false,
+                DataCadastro = DateTime.Now,
+                DataUltimoLogin = DateTime.Now,
+                Medico = false
             };
 
             await _loginRepository.CreateAsync(Login, cancellationToken);
+
+            await _loginRepository.SalvarAsync(cancellationToken);
 
             return true;
         }

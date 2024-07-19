@@ -17,9 +17,9 @@ namespace Hackaton.Models
         public bool Ativo { get; set; }
         [Column("Medico")]
         public bool Medico { get; set; }
-        [Column("DataCadastro")]
+        [Column("DataCadastro", TypeName = "datetime")]
         public DateTime DataCadastro { get; set; }
-        [Column("DataUltimoLogin")]
+        [Column("DataUltimoLogin", TypeName = "datetime")]
         public DateTime DataUltimoLogin { get; set; }
     }
 }

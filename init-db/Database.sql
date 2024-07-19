@@ -33,6 +33,7 @@ create table Paciente
 )
 alter table Paciente add constraint p_ativo default 1 for ativo
 GO
+drop table  [Login]
 
 create table [Login]
 (
@@ -40,10 +41,13 @@ create table [Login]
 	Email varchar(100),
 	Senha varchar(100),
 	Ativo bit,
-	DataCriacao datetime,
-	DataUltimoLogin datetime
+	Medico bit,
+	DataCriacao datetime null,
+	DataUltimoLogin datetime null
 )
-alter table Paciente add constraint l_ativo default 1 for ativo
-alter table Paciente add constraint l_DataCriacao default getdate() for DataCriacao
-alter table Paciente add constraint l_DataUltimoLogin default getdate() for DataUltimoLogin
+alter table Paciente add constraint P_ativo default 1 for ativo
+alter table [Login] add constraint L_medico default 1 for Medico
+alter table [Login] add constraint L_Ativo default 1 for Ativo
+alter table [Login] add constraint L_DataCriacao default 1 for DataCriacao
+alter table [Login] add constraint L_DataUltimoLogin default 1 for DataUltimoLogin
 

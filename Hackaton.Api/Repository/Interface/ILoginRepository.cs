@@ -8,5 +8,6 @@ namespace Hackaton.Api.Repository.Interface
     {
         Task CreateAsync(Login login, CancellationToken cancellationToken);
         Task<bool> LoginAsync(string email, string senha, CancellationToken cancellationToken);
+        Task SalvarAsync(CancellationToken cancellationToken);
     }
 }

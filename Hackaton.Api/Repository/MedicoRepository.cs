@@ -20,7 +20,6 @@ namespace Hackaton.Api.Repository
         public async Task CreateAsync(Medico medico, CancellationToken cancellation = default)
         {
             _context.Medico.Add(medico);
-            await _context.SaveChangesAsync(cancellation);
         }
 
         public async Task UpdateAsync(Medico medico, CancellationToken cancellationToken = default)
