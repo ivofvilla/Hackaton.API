@@ -34,7 +34,7 @@ namespace Hackaton.Api.Domain.Commands.Paciente.Create
             {
                 Email = command.Email,
                 Senha = command.Senha,
-                Ativo = false,
+                Ativo = true,
                 DataCadastro = DateTime.Now,
                 DataUltimoLogin = DateTime.Now,
                 Medico = false

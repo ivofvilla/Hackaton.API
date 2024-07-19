@@ -14,7 +14,7 @@ namespace Hackaton.Models
         public string Nome { get; set; }
         [Column("Email")]
         public string Email { get; set; }
-        [Column("DataNascimento")]
+        [Column("DataNascimento", TypeName = "datetime")]
         public DateTime DataNascimento { get; set; }
         [Column("CRM")]
         public string CRM { get; set; }
@@ -28,7 +28,7 @@ namespace Hackaton.Models
         { 
         }
 
-        public Medico(string nome, string email, string senha, DateTime dataNascimento, string CRM, string especialidade)
+        public Medico(string nome, string email, DateTime dataNascimento, string CRM, string especialidade)
         {
             this.Nome = nome;
             this.Email = email;

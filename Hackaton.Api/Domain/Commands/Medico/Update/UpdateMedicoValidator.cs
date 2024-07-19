@@ -17,9 +17,6 @@ namespace Hackaton.Api.Domain.Commands.Medico.Update
             RuleFor(command => command.DataNascimento)
                 .NotEmpty().WithMessage("O campo Data de nascimento é obrigatória.");
 
-            RuleFor(command => command.Senha)
-                .NotEmpty().WithMessage("O campo Senha é obrigatório.");
-
             RuleFor(command => command.Nome)
                 .NotEmpty().WithMessage("O campo Nome é obrigatória.");
 

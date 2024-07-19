@@ -15,7 +15,7 @@ namespace Hackaton.Models
         public string Nome { get; set; }
         [Column("Email")]
         public string Email { get; set; }
-        [Column("DataNascimento")]
+        [Column("DataNascimento", TypeName = "datetime")]
         public DateTime DataNascimento { get; set; }
         public bool Ativo { get; set; }
         public virtual IEnumerable<Agenda> Agendas { get; set; } = new List<Agenda>();

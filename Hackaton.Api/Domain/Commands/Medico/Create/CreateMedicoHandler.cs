@@ -28,17 +28,22 @@ namespace Hackaton.Api.Domain.Commands.Medico.Create
                 return false;
             }
 
-            var paciente = new Models.Medico(command.Nome, command.Email, command.Senha, command.DataNascimento, command.CRM, command.Especialidade);
+            var medico = new Models.Medico(command.Nome, command.Email, command.DataNascimento, command.CRM, command.Especialidade);
 
-            await _medicoRepository.CreateAsync(paciente, cancellationToken);
+            await _medicoRepository.CreateAsync(medico, cancellationToken);
 
             var Login = new Models.Login
             {
                 Email = command.Email,
-                Senha = command.Senha
+                Senha = command.Senha,
+                Ativo = true,
+                DataCadastro = DateTime.Now,
+                DataUltimoLogin = DateTime.Now,
+                Medico = true
             };
 
             await _loginRepository.CreateAsync(Login, cancellationToken);
+            await _loginRepository.SalvarAsync(cancellationToken);
 
             return true;
         }
