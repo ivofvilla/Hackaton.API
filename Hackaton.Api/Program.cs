@@ -13,6 +13,7 @@ using Hackaton.Api.Domain.Commands.Login.Create;
 using Hackaton.Api.Domain.Commands.Medico.Create;
 using Hackaton.Api.Domain.Commands.Medico.Delete;
 using Hackaton.Api.Domain.Commands.Medico.Update;
+using Hackaton.Api.Domain.Commands.Login.Update;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,7 @@ builder.Services.AddTransient<IValidator<DeleteMedicoCommand>, DeleteMedicoValid
 builder.Services.AddTransient<IValidator<UpdateMedicoCommand>, UpdateMedicoValidator>();
 builder.Services.AddTransient<IValidator<CreatePacienteCommand>, CreatePacienteValidator>();
 builder.Services.AddTransient<IValidator<UpdatePacienteCommand>, UpdatePacienteValidator>();
+builder.Services.AddTransient<IValidator<UpdateLoginCommand>, UpdateLoginValidation>();
 
 
 builder.Services.AddScoped<IAgendaRepository, AgendaRepository>().Reverse();
@@ -44,12 +46,13 @@ builder.Services.AddScoped<ILoginRepository, LoginRepository>().Reverse();
 builder.Services.AddScoped<IMedicoRepository, MedicoRepository>().Reverse();
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>().Reverse();
 
-builder.Services.AddCors(o => o.AddPolicy("HakatonApi", builder =>
-{
-    builder.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
-}));
+
+//builder.Services.AddCors(o => o.AddPolicy("HakatonApi", builder =>
+//{
+//    builder.AllowAnyOrigin()
+//           .AllowAnyMethod()
+//           .AllowAnyHeader();
+//}));
 
 var app = builder.Build();
 
