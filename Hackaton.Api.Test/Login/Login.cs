@@ -8,6 +8,7 @@ using FluentValidation.Results;
 using Hackaton.Api.Domain.Commands.Login.Create;
 using Hackaton.Api.Repository.Interface;
 
+
 namespace Hackaton.Api.Test.Login
 {
     public class CreateUsuarioHandleTests
@@ -35,7 +36,8 @@ namespace Hackaton.Api.Test.Login
             var resultado = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            resultado.Should().BeFalse();
+            bool resultadoBool = resultado.HasValue && resultado.Value == 0;
+            resultadoBool.Should().BeFalse();
             _mockLoginRepository.Verify(repo => repo.LoginAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
@@ -53,7 +55,8 @@ namespace Hackaton.Api.Test.Login
             var resultado = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            resultado.Should().BeTrue();
+            bool resultadoBool = resultado.HasValue && resultado.Value == 0;
+            resultadoBool.Should().BeTrue();
             _mockLoginRepository.Verify(repo => repo.LoginAsync(command.Email, command.Senha, It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -71,7 +74,8 @@ namespace Hackaton.Api.Test.Login
             var resultado = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            resultado.Should().BeFalse();
+            bool resultadoBool = resultado.HasValue && resultado.Value == 0;
+            resultadoBool.Should().BeFalse();
             _mockLoginRepository.Verify(repo => repo.LoginAsync(command.Email, command.Senha, It.IsAny<CancellationToken>()), Times.Once);
         }
     }
