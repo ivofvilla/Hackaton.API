@@ -42,7 +42,7 @@ create table [Login]
 	Senha varchar(100),
 	Ativo bit,
 	Medico bit,
-	DataCriacao datetime null,
+	DataCadastro datetime null,
 	DataUltimoLogin datetime null
 )
 alter table Paciente add constraint P_ativo default 1 for ativo
