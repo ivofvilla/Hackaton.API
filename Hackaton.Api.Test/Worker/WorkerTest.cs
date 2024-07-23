@@ -22,6 +22,7 @@ namespace Hackaton.Api.Test.Worker
         {
             _emailServiceMock = new Mock<IEmailService>();
             _serviceProvider = new Mock<IServiceProvider>();
+            _mockLogger = new Mock<ILogger<Hackaton.Worker.Worker>>();
             _worker = new Hackaton.Worker.Worker(_serviceProvider.Object, _mockLogger.Object, _emailServiceMock.Object);
         }
 
@@ -35,27 +36,15 @@ namespace Hackaton.Api.Test.Worker
 
             using var context = new DbContextClass(options);
 
-
-            var agenda1 = new Models.Agenda (1, 1, DateTime.Now.AddDays(1));
-            agenda1.Id = 1;
-
+            var agenda1 = new Models.Agenda(1, 1, DateTime.Now.AddDays(1));
             var agenda2 = new Models.Agenda(2, 2, DateTime.Now.AddDays(1));
-            agenda2.Id = 2;
 
-            context.Agenda.AddRange(
-                agenda1,
-                agenda2
-            );
+            context.Agenda.AddRange(agenda1, agenda2);
 
             var paciente1 = new Models.Paciente("Nome1", "paciente1@example.com", DateTime.Now.AddYears(-30));
-            paciente1.Id = 1;
-            var paciente2 = new Models.Paciente("Nome2", "paciente1@example.com", DateTime.Now.AddYears(-25));
-            paciente2.Id = 2;
-            
-            context.Paciente.AddRange(
-                paciente1,
-                paciente2
-            );
+            var paciente2 = new Models.Paciente("Nome2", "paciente2@example.com", DateTime.Now.AddYears(-25));
+
+            context.Paciente.AddRange(paciente1, paciente2);
 
             context.Medico.AddRange(
                 new Models.Medico { Id = 1, Nome = "Dr. Medico1" },
@@ -64,16 +53,20 @@ namespace Hackaton.Api.Test.Worker
 
             await context.SaveChangesAsync();
 
+            // Criação do ServiceProvider com o DbContext em memória
             var serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .AddSingleton(context)
                 .AddSingleton(_emailServiceMock.Object)
                 .BuildServiceProvider();
 
+            // Atualize o worker para usar o serviceProvider
+            var worker = new Hackaton.Worker.Worker(serviceProvider.GetService<IServiceProvider>(), serviceProvider.GetService<ILogger<Hackaton.Worker.Worker>>(), serviceProvider.GetService<IEmailService>());
+
             // Act
             var cancellationTokenSource = new CancellationTokenSource();
-            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(1)); // Cancela após 1 segundo para parar o worker
-            await _worker.StartAsync(cancellationTokenSource.Token);
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(1));
+            await worker.StartAsync(cancellationTokenSource.Token);
 
             // Assert
             _emailServiceMock.Verify(e => e.EnviarEmail(
@@ -88,7 +81,7 @@ namespace Hackaton.Api.Test.Worker
         {
             // Arrange
             var options = new DbContextOptionsBuilder<DbContextClass>()
-                .UseInMemoryDatabase(databaseName: "HakatonDatabaseTeste")
+                .UseInMemoryDatabase(databaseName: "HakatonDatabaseTestev2")
                 .Options;
 
             using var context = new DbContextClass(options);
@@ -117,10 +110,13 @@ namespace Hackaton.Api.Test.Worker
                 .AddSingleton(_emailServiceMock.Object)
                 .BuildServiceProvider();
 
+            var worker = new Hackaton.Worker.Worker(serviceProvider.GetService<IServiceProvider>(), serviceProvider.GetService<ILogger<Hackaton.Worker.Worker>>(), serviceProvider.GetService<IEmailService>());
+
+
             // Act
             var cancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(1));
-            await _worker.StartAsync(cancellationTokenSource.Token);
+            await worker.StartAsync(cancellationTokenSource.Token);
 
             // Assert
             _emailServiceMock.Verify(e => e.EnviarEmail(
@@ -203,7 +199,7 @@ namespace Hackaton.Api.Test.Worker
         {
             // Arrange
             var options = new DbContextOptionsBuilder<DbContextClass>()
-                .UseInMemoryDatabase(databaseName: "HakatonDatabaseTeste")
+                .UseInMemoryDatabase(databaseName: "HakatonDatabaseTestev5")
                 .Options;
 
             using var context = new DbContextClass(options);
@@ -231,6 +227,8 @@ namespace Hackaton.Api.Test.Worker
             // Simular exceção ao acessar o banco de dados
             var mockDbContext = new Mock<DbContextClass>(options);
             mockDbContext.Setup(db => db.Agenda).Throws(new Exception("Erro ao acessar o banco de dados"));
+
+
 
             // Act
             var cancellationTokenSource = new CancellationTokenSource();

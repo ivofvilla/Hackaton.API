@@ -49,13 +49,13 @@ namespace Hackaton.Api.Test.Login
             _mockValidator.Setup(v => v.ValidateAsync(command, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());
             _mockLoginRepository.Setup(repo => repo.LoginAsync(command.Email, command.Senha, It.IsAny<CancellationToken>()))
-                                .ReturnsAsync((Models.Login)null);
+                                .ReturnsAsync(new Models.Login { Id = 1 });
 
             // Act
             var resultado = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            bool resultadoBool = resultado.HasValue && resultado.Value == 0;
+            bool resultadoBool = resultado.HasValue && resultado.Value == 1;
             resultadoBool.Should().BeTrue();
             _mockLoginRepository.Verify(repo => repo.LoginAsync(command.Email, command.Senha, It.IsAny<CancellationToken>()), Times.Once);
         }
