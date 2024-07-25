@@ -5,17 +5,22 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackaton.Api", "Hackaton.Api\Hackaton.Api.csproj", "{A2625033-2184-4AB7-839A-B3E3E15A501C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "init-db", "init-db", "{DF5C9B85-3AAB-4E11-8110-025357338626}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackaton.Api.Test", "Hackaton.Api.Test\Hackaton.Api.Test.csproj", "{430591B8-65B3-464B-8162-E462EACDB7C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackaton.Worker", "Hackaton.Worker\Hackaton.Worker.csproj", "{6C681F5C-53B8-41CB-9303-05338FB31AC1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dados", "Dados", "{820DB348-709A-4675-9A08-6D500249B173}"
 	ProjectSection(SolutionItems) = preProject
 		init-db\Database.sql = init-db\Database.sql
 		init-db\entrypoint.sh = init-db\entrypoint.sh
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackaton.Api.Test", "Hackaton.Api.Test\Hackaton.Api.Test.csproj", "{430591B8-65B3-464B-8162-E462EACDB7C5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{3711E176-E9EE-4A11-A82F-7B937927C114}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackaton.Worker", "Hackaton.Worker\Hackaton.Worker.csproj", "{6C681F5C-53B8-41CB-9303-05338FB31AC1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackaton.Models", "Hackaton.Models\Hackaton.Models.csproj", "{D7648A53-75DE-496B-8638-2F9D4F074AFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackaton.Models", "Hackaton.Models\Hackaton.Models.csproj", "{6C16E4FB-CB33-4402-BF35-02153C2729D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +40,10 @@ Global
 		{6C681F5C-53B8-41CB-9303-05338FB31AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C681F5C-53B8-41CB-9303-05338FB31AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C681F5C-53B8-41CB-9303-05338FB31AC1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7648A53-75DE-496B-8638-2F9D4F074AFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7648A53-75DE-496B-8638-2F9D4F074AFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7648A53-75DE-496B-8638-2F9D4F074AFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7648A53-75DE-496B-8638-2F9D4F074AFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C16E4FB-CB33-4402-BF35-02153C2729D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C16E4FB-CB33-4402-BF35-02153C2729D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C16E4FB-CB33-4402-BF35-02153C2729D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C16E4FB-CB33-4402-BF35-02153C2729D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

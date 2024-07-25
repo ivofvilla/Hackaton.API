@@ -1,6 +1,6 @@
 ﻿using Hackaton.Api.Data;
-using Hackaton.Models;
 using Hackaton.Api.Repository.Interface;
+using Hackaton.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hackaton.Api.Repository
