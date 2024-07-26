@@ -12,7 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dados", "Dados", "{820DB348-709A-4675-9A08-6D500249B173}"
 	ProjectSection(SolutionItems) = preProject
 		init-db\Database.sql = init-db\Database.sql
-		init-db\entrypoint.sh = init-db\entrypoint.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{3711E176-E9EE-4A11-A82F-7B937927C114}"
@@ -21,6 +20,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackaton.Models", "Hackaton.Models\Hackaton.Models.csproj", "{6C16E4FB-CB33-4402-BF35-02153C2729D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagramas", "Diagramas", "{9980622B-B10B-484D-8852-24756E83FF36}"
+	ProjectSection(SolutionItems) = preProject
+		Diagramas\C1.drawio .drawio = Diagramas\C1.drawio .drawio
+		Diagramas\Médico.drawio = Diagramas\Médico.drawio
+		Diagramas\Paciente.drawio = Diagramas\Paciente.drawio
+		Diagramas\Worker.drawio = Diagramas\Worker.drawio
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
