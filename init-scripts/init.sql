@@ -33,7 +33,6 @@ create table Paciente
 )
 alter table Paciente add constraint p_ativo default 1 for ativo
 GO
-drop table  [Login]
 
 create table [Login]
 (
@@ -45,9 +44,8 @@ create table [Login]
 	DataCadastro datetime null,
 	DataUltimoLogin datetime null
 )
-alter table Paciente add constraint P_ativo default 1 for ativo
 alter table [Login] add constraint L_medico default 1 for Medico
 alter table [Login] add constraint L_Ativo default 1 for Ativo
-alter table [Login] add constraint L_DataCriacao default 1 for DataCriacao
+alter table [Login] add constraint L_DataCriacao default 1 for DataCadastro
 alter table [Login] add constraint L_DataUltimoLogin default 1 for DataUltimoLogin
 

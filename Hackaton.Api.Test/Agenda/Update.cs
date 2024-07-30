@@ -67,8 +67,10 @@ namespace Hackaton.Api.Test.Agenda
         public async Task Handle_DeveRetornarVerdadeiro_QuandoAgendamentoForEncontradoEAtualizado()
         {
             // Arrange
-            var comando = new UpdateAgendaCommand { Id = 1, NovaDataAgendamento = DateTime.Now.AddDays(1) };
-            var agendamento = new Models.Agenda(1, 1, DateTime.Now) { Id = comando.Id };
+            var data = DateTime.Now;
+            var comando = new UpdateAgendaCommand { Id = 1, NovaDataAgendamento = data, Hora = 2 };
+            var DataComparacao = new DateTime(data.Year, data.Month, data.Day, 2, 0, 0);
+            var agendamento = new Models.Agenda(1, 1, data) { Id = comando.Id };
 
             _mockValidador.Setup(v => v.ValidateAsync(comando, It.IsAny<CancellationToken>()))
                           .ReturnsAsync(new ValidationResult());
@@ -82,7 +84,7 @@ namespace Hackaton.Api.Test.Agenda
 
             // Assert
             resultado.Should().BeTrue();
-            agendamento.DataAgendamento.Should().Be(comando.NovaDataAgendamento);
+            agendamento.DataAgendamento.Should().Be(DataComparacao);
             _mockRepositorioAgenda.Verify(repo => repo.GetAgendamentoAsync(comando.Id, null, null, null, It.IsAny<CancellationToken>()), Times.Once);
             _mockRepositorioAgenda.Verify(repo => repo.UpdateAsync(agendamento, It.IsAny<CancellationToken>()), Times.Once);
         }

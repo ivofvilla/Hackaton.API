@@ -18,7 +18,6 @@ namespace Hackaton.Models
         [Column("DataNascimento", TypeName = "datetime")]
         public DateTime DataNascimento { get; set; }
         public bool Ativo { get; set; }
-        public virtual IEnumerable<Agenda> Agendas { get; set; } = new List<Agenda>();
 
         public Paciente(string nome, string email, DateTime dataNascimento)
         {
@@ -27,7 +26,5 @@ namespace Hackaton.Models
             this.DataNascimento = dataNascimento;
             this.Ativo = true;
         }
-
-        public void AdicionarAgenda(IEnumerable<Agenda> Agendas) => this.Agendas = Agendas;  
     }
 }

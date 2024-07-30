@@ -36,20 +36,20 @@ namespace Hackaton.Api.Test.Worker
 
             using var context = new DbContextClass(options);
 
-            var agenda1 = new Models.Agenda(1, 1, DateTime.Now.AddDays(1));
-            var agenda2 = new Models.Agenda(2, 2, DateTime.Now.AddDays(1));
+            var medico1 = new Models.Medico("dr Mario", "mario@medico.com", DateTime.Now.AddYears(-50), "exemplo1", "Nefrologista");
+            var medico2 = new Models.Medico("dr Luigi", "luigi@medico.com", DateTime.Now.AddYears(-50), "exemplo2", "Proctologista");
 
-            context.Agenda.AddRange(agenda1, agenda2);
+            context.Medico.AddRange(medico1, medico2);
 
             var paciente1 = new Models.Paciente("Nome1", "paciente1@example.com", DateTime.Now.AddYears(-30));
             var paciente2 = new Models.Paciente("Nome2", "paciente2@example.com", DateTime.Now.AddYears(-25));
 
             context.Paciente.AddRange(paciente1, paciente2);
 
-            context.Medico.AddRange(
-                new Models.Medico { Id = 1, Nome = "Dr. Medico1" },
-                new Models.Medico { Id = 2, Nome = "Dr. Medico2" }
-            );
+            var agenda1 = new Models.Agenda(1, 1, DateTime.Now.AddDays(1));
+            var agenda2 = new Models.Agenda(2, 2, DateTime.Now.AddDays(1));
+
+            context.Agenda.AddRange(agenda1, agenda2);
 
             await context.SaveChangesAsync();
 

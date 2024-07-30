@@ -6,6 +6,7 @@ namespace Hackaton.Api.Repository.Interface
     public interface IAgendaRepository
     {
         Task<IEnumerable<Agenda>?> GetByIdMedicoAsync(int idMedico, CancellationToken cancellationToken = default);
+        Task<IEnumerable<Agenda>?> GetAsyncMedico(int? Id, int? IdMedico, int? IdPaciente, CancellationToken cancellationToken = default);
         Task<Agenda?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         Task DeleteLogicAsync(Agenda client, CancellationToken cancellationToken = default);
         Task<IEnumerable<Agenda>?> GetAsync(int? Id, int? IdMedico, int? IdPaciente, DateTime? DataAgendamento, bool? EhMedico, CancellationToken cancellationToken = default);

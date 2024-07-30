@@ -22,8 +22,7 @@ namespace Hackaton.Models
         public string Especialidade { get; set; }
         [Column("Ativo")]
         public bool Ativo { get; set; }
-        public IEnumerable<Agenda> Agendas { get; set; } = new List<Agenda>();
-        public virtual int IdAgenda { get; set; }
+        public Agenda Agenda { get; set; }
 
         public Medico()
         { 
@@ -38,7 +37,5 @@ namespace Hackaton.Models
             this.Especialidade = especialidade;
             this.Ativo = true;
         }
-
-        public void AdicionarAgenda(IEnumerable<Agenda> Agendas) => this.Agendas = Agendas;
     }
 }

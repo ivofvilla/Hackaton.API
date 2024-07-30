@@ -24,32 +24,42 @@ namespace Hackaton.Api.Repository
         {
             IQueryable<Agenda>? agendas = _context.Agenda;
 
-            if (Id != null)
-            {
-                return await _context.Agenda.ToListAsync();
-            }
-
             if (IdMedico is not null)
             {
-                agendas = agendas.Where(w => w.IdMedico == IdMedico);
+                agendas = agendas.AsNoTracking()
+                                 .Include(k => k.Medico).AsNoTracking()
+                                 .Where(k => k.IdMedico == IdMedico && k.Ativo == true);
             }
 
             if (IdPaciente is not null)
             {
-                agendas = agendas.Where(w => w.IdPaciente == IdPaciente);
-            }
-            if (EhMedico is not null)
-            {
-                agendas = agendas.Where(w => w.Ativo == EhMedico);
+                agendas = agendas.AsNoTracking()
+                                 .Include(k => k.Medico).AsNoTracking()
+                                 .Where(k => k.IdPaciente == IdPaciente && k.Ativo == true);
             }
             if (DataAgendamento is not null)
             {
                 agendas = agendas.Where(w => w.DataAgendamento == DataAgendamento);
             }
             
-            
+            return await agendas.ToListAsync(cancellationToken);
+        }
 
-            return await agendas.Include("Medicos").Include("Pacientes").ToListAsync(cancellationToken);
+        public async Task<IEnumerable<Agenda>?> GetAsyncMedico(int? Id, int? IdMedico, int? IdPaciente, CancellationToken cancellationToken = default)
+        {
+            IQueryable<Agenda>? agendas = _context.Agenda;
+
+            if (IdMedico is not null)
+            {
+                agendas = agendas.AsNoTracking().Include(k => k.Paciente).AsNoTracking().Where(k => k.IdMedico == IdMedico && k.Ativo == true);
+            }
+
+            if (IdMedico is not null)
+            {
+                agendas = agendas.AsNoTracking().Include(k => k.Paciente).AsNoTracking().Where(k => k.IdPaciente == IdPaciente && k.Ativo == true);
+            }
+
+            return await agendas.ToListAsync();
         }
 
         public async Task CreateAsync(Agenda agenda, CancellationToken cancellation = default)

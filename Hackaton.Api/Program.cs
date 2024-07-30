@@ -20,9 +20,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "Hackaton API", Version = "v1" });
+});
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.AddDbContext<DbContextClass>(options =>
@@ -40,35 +42,40 @@ builder.Services.AddTransient<IValidator<CreatePacienteCommand>, CreatePacienteV
 builder.Services.AddTransient<IValidator<UpdatePacienteCommand>, UpdatePacienteValidator>();
 builder.Services.AddTransient<IValidator<UpdateLoginCommand>, UpdateLoginValidation>();
 
-
 builder.Services.AddScoped<IAgendaRepository, AgendaRepository>().Reverse();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>().Reverse();
 builder.Services.AddScoped<IMedicoRepository, MedicoRepository>().Reverse();
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>().Reverse();
 
-
-//builder.Services.AddCors(o => o.AddPolicy("HakatonApi", builder =>
-//{
-//    builder.AllowAnyOrigin()
-//           .AllowAnyMethod()
-//           .AllowAnyHeader();
-//}));
+// Comente ou remova o CORS por enquanto se não estiver configurado
+ builder.Services.AddCors(o => o.AddPolicy("HakatonApi", builder =>
+ {
+     builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+ }));
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hackaton API v1");
+        c.RoutePrefix = string.Empty; // Serve Swagger UI na raiz
+    });
 }
 
+// Desative o HTTPS Redirection se não for necessário no ambiente de desenvolvimento
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
+// Comente ou remova o CORS por enquanto se não estiver configurado
 app.UseCors("HakatonApi");
 
 app.Run();

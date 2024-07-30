@@ -23,8 +23,8 @@ namespace Hackaton.Models
         [Column("Ativo")]
         public bool Ativo { get; set; }
 
-        public virtual List<Medico> Medicos { get; set; }
-        public virtual List<Paciente> Pacientes { get; set; }
+        public virtual Medico Medico { get; set; }
+        public virtual Paciente Paciente { get; set; }
 
         public Agenda(int IdPaciente, int IdMedico, DateTime DataAgendamento)
         {

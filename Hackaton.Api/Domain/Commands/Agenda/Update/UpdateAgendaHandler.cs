@@ -32,7 +32,10 @@ namespace Hackaton.Api.Domain.Commands.Agenda.Update
             if (agendamento is null)
                 return false;
 
-            agendamento.DataAgendamento = command.NovaDataAgendamento;
+            agendamento.DataAgendamento = new DateTime(command.NovaDataAgendamento.Year, 
+                                                       command.NovaDataAgendamento.Month,
+                                                       command.NovaDataAgendamento.Day,
+                                                       command.Hora, 0, 0);
             
             await _agendamentoRepository.UpdateAsync(agendamento, cancellationToken);
 
