@@ -30,7 +30,7 @@ namespace Hackaton.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/Login/alterar/{id}")]
+        [Route("api/Login/alterar")]
         public async Task<ActionResult> alterar([FromQuery] int id, [FromBody] UpdateLoginCommand usuario, CancellationToken cancellation)
         {
             usuario.SetId(id);
