@@ -39,7 +39,7 @@ namespace Hackaton.Api.Test.Worker
             var medico1 = new Models.Medico("dr Mario", "mario@medico.com", DateTime.Now.AddYears(-50), "exemplo1", "Nefrologista");
             var medico2 = new Models.Medico("dr Luigi", "luigi@medico.com", DateTime.Now.AddYears(-50), "exemplo2", "Proctologista");
 
-            context.Medico.AddRange(medico1, medico2);
+            context.Medico.Add(medico1);
 
             var paciente1 = new Models.Paciente("Nome1", "paciente1@example.com", DateTime.Now.AddYears(-30));
             var paciente2 = new Models.Paciente("Nome2", "paciente2@example.com", DateTime.Now.AddYears(-25));
@@ -86,21 +86,22 @@ namespace Hackaton.Api.Test.Worker
 
             using var context = new DbContextClass(options);
 
-            var agenda1 = new Models.Agenda(1, 1, DateTime.Now.AddDays(1));
-            agenda1.Id = 1;
-
-            var agenda2 = new Models.Agenda(2, 2, DateTime.Now.AddDays(1));
-            agenda2.Id = 2;
-
             var paciente1 = new Models.Paciente("Nome1", "paciente1@example.com", DateTime.Now.AddYears(-30));
             paciente1.Id = 1;
             var paciente2 = new Models.Paciente("Nome2", "paciente1@example.com", DateTime.Now.AddYears(-25));
             paciente2.Id = 2;
 
             context.Medico.AddRange(
-                new Models.Medico { Id = 1, Nome = "Dr. Medico1" },
-                new Models.Medico { Id = 2, Nome = "Dr. Medico2" }
+                new Models.Medico { Id = 1, Nome = "Dr. Medico1", Email = "medico1@example.com", CRM = "12345", Especialidade = "Cardiologia" },
+                new Models.Medico { Id = 2, Nome = "Dr. Medico2", Email = "medico2@example.com", CRM = "67890", Especialidade = "Neurologia" }
             );
+
+
+            var agenda1 = new Models.Agenda(1, 1, DateTime.Now.AddDays(1));
+            agenda1.Id = 1;
+
+            var agenda2 = new Models.Agenda(2, 2, DateTime.Now.AddDays(1));
+            agenda2.Id = 2;
 
             await context.SaveChangesAsync();
 
@@ -111,7 +112,6 @@ namespace Hackaton.Api.Test.Worker
                 .BuildServiceProvider();
 
             var worker = new Hackaton.Worker.Worker(serviceProvider.GetService<IServiceProvider>(), serviceProvider.GetService<ILogger<Hackaton.Worker.Worker>>(), serviceProvider.GetService<IEmailService>());
-
 
             // Act
             var cancellationTokenSource = new CancellationTokenSource();
@@ -136,7 +136,7 @@ namespace Hackaton.Api.Test.Worker
 
             using var context = new DbContextClass(options);
 
-            var agenda = new Models.Agenda(999,999, DateTime.Now.AddDays(1));
+            var agenda = new Models.Agenda(999, 999, DateTime.Now.AddDays(1));
             agenda.Id = 1;
 
             context.Agenda.Add(agenda);
@@ -213,7 +213,7 @@ namespace Hackaton.Api.Test.Worker
             context.Agenda.Add(agenda1);
 
             context.Paciente.Add(paciente1);
-            context.Medico.Add(new Models.Medico { Id = 1, Nome = "Dr. Medico1" }); ;
+            context.Medico.Add(new Models.Medico { Id = 1, Nome = "Dr. Medico1", Email = "medico1@example.com", CRM = "12345", Especialidade = "Cardiologia" });
 
             await context.SaveChangesAsync();
 

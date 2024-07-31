@@ -13,25 +13,25 @@ namespace Hackaton.Models
 
         [Column("IdPaciente")]
         public int IdPaciente { get; set; }
-        
+
         [Column("IdMedico")]
         public int IdMedico { get; set; }
-        
+
         [Column("DataAgendamento")]
         public DateTime DataAgendamento { get; set; }
-        
+
         [Column("Ativo")]
         public bool Ativo { get; set; }
 
         public virtual Medico Medico { get; set; }
         public virtual Paciente Paciente { get; set; }
 
-        public Agenda(int IdPaciente, int IdMedico, DateTime DataAgendamento)
+        public Agenda(int idPaciente, int idMedico, DateTime dataAgendamento)
         {
-            this.IdPaciente = IdPaciente;
-            this.IdMedico = IdMedico;
-            this.DataAgendamento = DataAgendamento;
-            this.Ativo = true;
+            IdPaciente = idPaciente;
+            IdMedico = idMedico;
+            DataAgendamento = dataAgendamento;
+            Ativo = true;
         }
     }
 }

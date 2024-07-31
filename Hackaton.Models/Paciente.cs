@@ -11,20 +11,27 @@ namespace Hackaton.Models
     {
         [Key, Column("Id")]
         public int Id { get; set; }
+
         [Column("Nome")]
         public string Nome { get; set; }
+
         [Column("Email")]
         public string Email { get; set; }
+
         [Column("DataNascimento", TypeName = "datetime")]
         public DateTime DataNascimento { get; set; }
+
+        [Column("Ativo")]
         public bool Ativo { get; set; }
+
+        public virtual ICollection<Agenda> Agendas { get; set; } = new List<Agenda>();
 
         public Paciente(string nome, string email, DateTime dataNascimento)
         {
-            this.Nome = nome;
-            this.Email = email;
-            this.DataNascimento = dataNascimento;
-            this.Ativo = true;
+            Nome = nome;
+            Email = email;
+            DataNascimento = dataNascimento;
+            Ativo = true;
         }
     }
 }
