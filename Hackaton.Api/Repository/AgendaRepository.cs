@@ -22,25 +22,18 @@ namespace Hackaton.Api.Repository
 
         public async Task<IEnumerable<Agenda>?> GetAsync(int? Id, int? IdMedico, int? IdPaciente, DateTime? DataAgendamento, bool? EhMedico, CancellationToken cancellationToken = default)
         {
-            IQueryable<Agenda>? agendas = _context.Agenda;
+            IQueryable<Agenda>? agendas = _context.Agenda.AsNoTracking()
+                                                 .Include(k => k.Paciente).AsNoTracking()
+                                                 .Include(k => k.Medico).AsNoTracking();
 
             if (IdMedico is not null)
-            {
-                agendas = agendas.AsNoTracking()
-                                 .Include(k => k.Medico).AsNoTracking()
-                                 .Where(k => k.IdMedico == IdMedico && k.Ativo == true);
-            }
+                agendas = agendas.Where(k => k.Medico.Id == IdMedico && k.Ativo == true);
 
             if (IdPaciente is not null)
-            {
-                agendas = agendas.AsNoTracking()
-                                 .Include(k => k.Medico).AsNoTracking()
-                                 .Where(k => k.IdPaciente == IdPaciente && k.Ativo == true);
-            }
+                agendas = agendas.Where(k => k.IdPaciente == IdPaciente && k.Ativo == true);
+
             if (DataAgendamento is not null)
-            {
                 agendas = agendas.Where(w => w.DataAgendamento == DataAgendamento);
-            }
             
             return await agendas.ToListAsync(cancellationToken);
         }

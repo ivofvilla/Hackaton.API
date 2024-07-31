@@ -69,7 +69,7 @@ namespace Hackaton.Api.Test.Worker
             await worker.StartAsync(cancellationTokenSource.Token);
 
             // Assert
-            _emailServiceMock.Verify(e => e.EnviarEmail(
+            _emailServiceMock.Verify(e => e.EnviarEmailAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
@@ -119,7 +119,7 @@ namespace Hackaton.Api.Test.Worker
             await worker.StartAsync(cancellationTokenSource.Token);
 
             // Assert
-            _emailServiceMock.Verify(e => e.EnviarEmail(
+            _emailServiceMock.Verify(e => e.EnviarEmailAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
@@ -155,7 +155,7 @@ namespace Hackaton.Api.Test.Worker
             await _worker.StartAsync(cancellationTokenSource.Token);
 
             // Assert
-            _emailServiceMock.Verify(e => e.EnviarEmail(
+            _emailServiceMock.Verify(e => e.EnviarEmailAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
@@ -187,7 +187,7 @@ namespace Hackaton.Api.Test.Worker
             await _worker.StartAsync(cancellationTokenSource.Token);
 
             // Assert
-            emailServiceMock.Verify(e => e.EnviarEmail(
+            emailServiceMock.Verify(e => e.EnviarEmailAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
@@ -236,7 +236,7 @@ namespace Hackaton.Api.Test.Worker
             await _worker.StartAsync(cancellationTokenSource.Token);
 
             // Assert
-            emailServiceMock.Verify(e => e.EnviarEmail(
+            emailServiceMock.Verify(e => e.EnviarEmailAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),

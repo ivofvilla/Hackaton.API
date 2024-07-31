@@ -8,6 +8,6 @@ namespace Hackaton.Worker.Repository.Interface
 {
     public interface IEmailService
     {
-        void EnviarEmail(string emailPaciente, string nomePaciente, string nomeMedico, DateTime dataConsulta);
+        void EnviarEmailAsync(string emailPaciente, string nomePaciente, string nomeMedico, DateTime dataConsulta);
     }
 }

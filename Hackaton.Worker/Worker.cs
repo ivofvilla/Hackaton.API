@@ -31,8 +31,8 @@ namespace Hackaton.Worker
                         var proximoDiaUtil = GetProximoDiaUtil(DateTime.Now);
 
                         var agendamentos = await dbContext.Agenda
-                            .Where(a => a.DataAgendamento.Date == proximoDiaUtil.Date)
-                            .ToListAsync();
+                                                            .Where(a => a.DataAgendamento.Date == proximoDiaUtil.Date)
+                                                            .ToListAsync();
 
                         foreach (var agendamento in agendamentos)
                         {
@@ -41,7 +41,7 @@ namespace Hackaton.Worker
 
                             if (paciente != null && medico != null)
                             {
-                                _emailService.EnviarEmail(paciente.Email, paciente.Nome, medico.Nome, proximoDiaUtil);
+                                _emailService.EnviarEmailAsync(paciente.Email, paciente.Nome, medico.Nome, proximoDiaUtil);
                             }
                         }
                     }

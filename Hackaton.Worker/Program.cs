@@ -21,10 +21,13 @@ namespace Hackaton.Worker
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
+                    var configuration = hostContext.Configuration;
+
                     services.AddDbContext<DbContextClass>(options =>
-                        options.UseSqlServer("HakatonApi"));
+                        options.UseSqlServer(configuration.GetConnectionString("HakatonApi")));
 
                     services.AddTransient<IEmailService, EmailService>();
+                    services.AddTransient<HttpClient>();
 
                     services.AddHostedService<Worker>();
                 });
