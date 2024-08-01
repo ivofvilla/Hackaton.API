@@ -33,7 +33,7 @@ namespace Hackaton.Api.Repository
                 agendas = agendas.Where(k => k.IdPaciente == IdPaciente && k.Ativo == true);
 
             if (DataAgendamento is not null)
-                agendas = agendas.Where(w => w.DataAgendamento == DataAgendamento);
+                agendas = agendas.Where(w => w.DataAgendamento == DataAgendamento && w.Ativo == true);
             
             return await agendas.ToListAsync(cancellationToken);
         }

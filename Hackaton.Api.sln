@@ -13,10 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackaton.Models", "Hackaton
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagramas", "Diagramas", "{9980622B-B10B-484D-8852-24756E83FF36}"
 	ProjectSection(SolutionItems) = preProject
-		Diagramas\C1.drawio .drawio = Diagramas\C1.drawio .drawio
+		Diagramas\C1.pdf = Diagramas\C1.pdf
 		Diagramas\Médico.drawio = Diagramas\Médico.drawio
+		Diagramas\C1.drawio = Diagramas\C1.drawio
+		Diagramas\Médico.pdf = Diagramas\Médico.pdf
 		Diagramas\Paciente.drawio = Diagramas\Paciente.drawio
+		Diagramas\Paciente.pdf = Diagramas\Paciente.pdf
 		Diagramas\Worker.drawio = Diagramas\Worker.drawio
+		Diagramas\Worker.pdf = Diagramas\Worker.pdf
 	EndProjectSection
 EndProject
 Global
